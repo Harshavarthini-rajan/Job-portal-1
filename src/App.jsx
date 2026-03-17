@@ -58,7 +58,11 @@ import { EditJob } from './Components-Employer/EditJob'
 // import { ProfileCard } from './Components-Employer/ProfileCard'
 import { JsProfileOverview } from './Components-Employer/JsProfileOverview'
 
-const router = createBrowserRouter([{
+const router = createBrowserRouter([{  path: '/',
+  element: <Landingpage />
+}, 
+{
+  
   path: '/Job-portal',
   element: <Landingpage />,
 },
