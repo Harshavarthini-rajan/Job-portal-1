@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from 'react'
-import { JHeader } from './JHeader'
 import './SearchResults.css'
 import { SearchResultsCard } from './SearchResultsCard'
 import { Footer } from '../Components-LandingPage/Footer'
@@ -14,7 +13,8 @@ export const SearchResults = () => {
     // --- UI STATES (These control the checkboxes visually) ---
     const [minVal, setMinVal] = useState(0);
     const [maxVal, setMaxVal] = useState(100);
-    const [Exp, SetExp] = useState(30);
+    const [minExp, setMinExp] = useState(0);
+    const [maxExp, setMaxExp] = useState(30);
     const location = useLocation();
 
     // ... [Helper functions remain unchanged] ...
@@ -49,6 +49,14 @@ export const SearchResults = () => {
             return acc;
         }, {});
     };
+    const locationCounts = countPropertyOccurrences(
+        jobs.flatMap((item) =>
+            Array.isArray(item.location)
+                ? item.location.map((loc) => ({ ...item, location: loc }))
+                : [{ ...item, location: item.location }]
+        ),
+        'location'
+    );
     const educationCounts = jobs.reduce((acc, item) => {
         item.EducationRequired.forEach((edu) => {
             const degree = edu.toLowerCase();
@@ -65,7 +73,6 @@ export const SearchResults = () => {
     }, {});
 
     // ... [Data Prep] ...
-    const locationCounts = countPropertyOccurrences(jobs, 'location');
     const workTypeCounts = countPropertyOccurrences(jobs, 'WorkType');
     const PostedbyCounts = countPropertyOccurrences(jobs, 'PostedBy')
     const CompanyCounts = countPropertyOccurrences(jobs, 'company');
@@ -112,6 +119,32 @@ export const SearchResults = () => {
     const [SelectedPostDate, setSelectedPostDate] = useState([]);
     const [SelectedIndustryType, setSelectedIndustryType] = useState([]);
 
+    // search bar location with sidebar location checkbox
+    useEffect(() => {
+    if (searchLocation) {
+        setSelectedLocations([searchLocation.toLowerCase()]);
+    } else {
+        setSelectedLocations([]);
+    }}, [searchLocation]);
+
+    // search bar experience with sidebar experience slider
+    useEffect(() => {
+    if (searchExp) {
+        if (searchExp === "fresher") {
+            setMinExp(0);
+            setMaxExp(0);
+        } else if (searchExp === "1-3") {
+            setMinExp(1);
+            setMaxExp(3);
+        } else if (searchExp === "3-5") {
+            setMinExp(3);
+            setMaxExp(5);
+        } else if (searchExp === "5+") {
+            setMinExp(5);
+            setMaxExp(30);
+        }
+    }}, [searchExp]);
+
     // --- APPLIED STATE (This is what actually filters the list) ---
     const [appliedSidebarFilters, setAppliedSidebarFilters] = useState({
         locations: [],
@@ -123,6 +156,7 @@ export const SearchResults = () => {
         industryType: [],
         minSalary: 0,
         maxSalary: 100,
+        minExp: 0,
         maxExp: 30
     });
 
@@ -146,12 +180,25 @@ export const SearchResults = () => {
             industryType: SelectedIndustryType,
             minSalary: minVal,
             maxSalary: maxVal,
-            maxExp: Exp
+            minExp: minExp,
+            maxExp: maxExp
         });
     };
 
     const HandleClear = () => {
-        // 1. Reset visual checkboxes
+        // 1. Reset search bar states
+        setSearchQuery("");
+        setSearchLocation("");
+        setSearchExp("");
+
+        // 2. Reset applied search filters
+        setAppliedFilters({
+            query: "",
+            location: "",
+            experience: ""
+        });
+
+        // 3. Reset sidebar selected
         setSelectedLocations([]);
         setselectedWorkType([]);
         setSelectedPostedby([]);
@@ -161,9 +208,10 @@ export const SearchResults = () => {
         setSelectedIndustryType([]);
         setMinVal(0);
         setMaxVal(100);
-        SetExp(30);
+        setMinExp(0);
+        setMaxExp(30);
 
-        // 2. Reset the actual filter logic immediately
+        // 4. Reset applied sidebar filters
         setAppliedSidebarFilters({
             locations: [],
             workType: [],
@@ -174,9 +222,10 @@ export const SearchResults = () => {
             industryType: [],
             minSalary: 0,
             maxSalary: 100,
+            minExp: 0,
             maxExp: 30
         });
-    }
+    };
 
     const handleSort = (type) => {
         setSortBy(type);
@@ -198,8 +247,16 @@ export const SearchResults = () => {
 
     // --- CHECKBOX HANDLERS (Update UI state only) ---
     const handleLocationChange = (event) => {
-        const val = event.target.value;
-        setSelectedLocations(prev => event.target.checked ? [...prev, val] : prev.filter(item => item !== val));
+    const val = event.target.value;
+
+    let updatedLocations;
+    if (event.target.checked) {
+        updatedLocations = [val];
+    } else {
+        updatedLocations = [];
+    }
+    setSelectedLocations(updatedLocations);
+    setSearchLocation(updatedLocations[0] || "");
     };
     const HandleWorkType = (event) => {
         const val = event.target.value;
@@ -235,21 +292,42 @@ export const SearchResults = () => {
                 job.company?.toLowerCase().includes(appliedFilters.query.toLowerCase()) ||
                 job.KeySkills.some(skill => skill.toLowerCase().includes(appliedFilters.query));
 
-            const matchesSearchBarLocation = appliedFilters.location === "" ||
-                job.location?.toLowerCase().includes(appliedFilters.location.toLowerCase());
+            const matchesSearchBarLocation =
+                appliedFilters.location === "" ||
+                (Array.isArray(job.location)
+                    ? job.location.some(loc =>
+                        loc.toLowerCase().includes(appliedFilters.location.toLowerCase())
+                    )
+                    : job.location
+                        ? job.location.toLowerCase().includes(appliedFilters.location.toLowerCase())
+                        : false);
 
             const JobExp = job.experience ? parseInt(job.experience.match(/\d+/)) : 0;
             let matchesSearchExp = true;
-            if (appliedFilters.experience === "fresher") matchesSearchExp = JobExp === 0;
-            else if (appliedFilters.experience === "1-3") matchesSearchExp = JobExp >= 1 && JobExp <= 3;
-            else if (appliedFilters.experience === "3-5") matchesSearchExp = JobExp >= 3 && JobExp <= 5;
-            else if (appliedFilters.experience === "5+") matchesSearchExp = JobExp >= 5;
+            if (appliedFilters.experience !== "") {
+                if (appliedFilters.experience === "fresher") {
+                    matchesSearchExp = JobExp === 0;
+                } else if (appliedFilters.experience === "1-3") {
+                    matchesSearchExp = JobExp >= 1 && JobExp <= 3;
+                } else if (appliedFilters.experience === "3-5") {
+                    matchesSearchExp = JobExp >= 3 && JobExp <= 5;
+                } else if (appliedFilters.experience === "5+") {
+                    matchesSearchExp = JobExp >= 5;
+                }
+            }
 
             // Sidebar Filters (Using the Applied State)
             const sf = appliedSidebarFilters;
 
-            const jobLocation = job.location ? job.location.toLowerCase() : 'unknown location';
-            const matchesLocation = sf.locations.length === 0 || sf.locations.includes(jobLocation);
+            const jobLocations = Array.isArray(job.location)
+                ? job.location.map(loc => loc.toLowerCase())
+                : job.location
+                    ? [job.location.toLowerCase()]
+                    : ['unknown location'];
+
+            const matchesLocation =
+                sf.locations.length === 0 ||
+                jobLocations.some(loc => sf.locations.includes(loc));
 
             const jobWorkType = job.WorkType ? job.WorkType.toLowerCase() : 'unknown worktype';
             const matchesWorkType = sf.workType.length === 0 || sf.workType.includes(jobWorkType);
@@ -266,7 +344,7 @@ export const SearchResults = () => {
             const matchesEducation = sf.education.length === 0 || job.EducationRequired.some(edu => sf.education.includes(edu.toLowerCase()));
             const matchesIndustryType = sf.industryType.length === 0 || job.IndustryType.some(edu => sf.industryType.includes(edu.toLowerCase()));
 
-            const matchesExperience = JobExp <= sf.maxExp;
+            const matchesExperience = JobExp >= sf.minExp && JobExp <= sf.maxExp;
 
             const jobSalaryNum = job.salary ? parseFloat(job.salary) : 0;
             const isAboveMin = jobSalaryNum >= sf.minSalary;
@@ -351,7 +429,7 @@ export const SearchResults = () => {
                                             name="location"
                                             value={locationKey}
                                             onChange={handleLocationChange}
-                                            checked={selectedLocations.includes(locationKey)}
+                                            checked={selectedLocations.includes(locationKey)|| searchLocation.toLowerCase() === locationKey}
                                         />
                                         <span className="location-text">{displayLocation}</span>
                                     </label>
@@ -480,23 +558,33 @@ export const SearchResults = () => {
 
                     <div className="filter-group">
                         <h3 className="section-title">Experience</h3>
-                        {/* SINGLE SLIDER (Experience) */}
-                        <div className="range-container single-wrapper">
-                            <input
-                                type="range"
-                                className="slider single-thumb"
+                        <div className="range-container">
+                            <div className="slider-base-track" />
+                            <div className="slider-active-range"
+                            style={{
+                                left: `${(minExp / 30) * 100}%`,
+                                width: `${((maxExp - minExp) / 30) * 100}%`
+                            }}
+                            />
+                            <input type="range"
+                                className="slider multi thumb-left"
                                 min="0"
                                 max="30"
-                                value={Exp}
-                                onChange={(e) => SetExp(Math.max(Number(e.target.value)))}
-                                style={{
-                                    // FIX: Calculate % based on max=30, not 100
-                                    background: `linear-gradient(to right, #3b82f6 ${(Exp / 30) * 100}%, #e2e8f0 ${(Exp / 30) * 100}%)`
-                                }}
+                                value={minExp}
+                                onChange={(e) =>setMinExp(Math.min(Number(e.target.value), maxExp - 1))}
+                            />
+                            <input
+                                className="slider multi thumb-right"
+                                type="range"
+                                min="0"
+                                max="30"
+                                value={maxExp}
+                                onChange={(e) =>setMaxExp(Math.max(Number(e.target.value), minExp + 1))}
                             />
                         </div>
                         <div className="salary-labels">
-                            <span>Exp: {Exp} Years</span>
+                            <span>Min: {minExp} yrs</span>
+                            <span>Max: {maxExp} yrs</span>
                         </div>
 
                         <h3 className="section-title">Salary</h3>
