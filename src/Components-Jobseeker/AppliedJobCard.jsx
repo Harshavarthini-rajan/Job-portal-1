@@ -24,7 +24,7 @@ export const AppliedJobCard = ({ opp }) => {
       <div className="Opportunities-job-details">
         <p className='Opportunities-detail-line'><img src={time} className='card-icons' />{opp.WorkType}<span className="Opportunities-divider">|</span>{opp.salary} Lpa</p>
         <p className='Opportunities-detail-line'><img src={experience} className='card-icons' />{opp.experience} years</p>
-        <p className='Opportunities-detail-line'><img src={place} className='card-icons' />{opp.location}</p>
+        <p className='Opportunities-detail-line'><img src={place} className='card-icons' />{Array.isArray(opp.location) ? opp.location.join(", ") : opp.location || "N/A"}</p>
         <p className='Opportunities-detail-line'><img src={calender} className='card-icons' />{opp.posted}<span className="Opportunities-divider">|</span>Openings: {opp.openings}<span className="Opportunities-divider">|</span>Applicants: {opp.applicants}</p>
       </div>
 

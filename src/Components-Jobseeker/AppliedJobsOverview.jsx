@@ -32,7 +32,7 @@ const AnimatedConnector = styled(StepConnector)(({ theme }) => ({
 export const AppliedJobsOverview = () => {
 
   const { id } = useParams();
-  const { Alluser,currentUserId,currentUser,withdrawApplication, removeRejectedJob } = useJobs();
+  const { Alluser, currentUserId, currentUser, withdrawApplication, removeRejectedJob } = useJobs();
 
 
   const navigate = useNavigate();
@@ -54,33 +54,33 @@ export const AppliedJobsOverview = () => {
   const getFilteredSteps = () => {
     if (!isRejected) return statusFlow;
     const currentIndex = statusFlow.findIndex(s => s.label === liveJobData?.status);
-    const cutoff = currentIndex === -1 ? 0 : currentIndex;  
+    const cutoff = currentIndex === -1 ? 0 : currentIndex;
     const initialSteps = statusFlow.slice(0, cutoff + 1);
     return [
       ...initialSteps,
       { label: 'Rejected', sub: "Better luck next time!", isError: true }
     ];
-};
+  };
 
   const displaySteps = getFilteredSteps();
-  
 
-useEffect(() => {
+
+  useEffect(() => {
     if (liveJobData?.applicationStatus) {
-        if (isRejected) {
-        setActiveStep(displaySteps.length - 1); 
-    } else {
-            const completedSteps = liveJobData.applicationStatus.filter(
-                (step) => step.status === 'completed'
-            ).length;
-            setActiveStep(completedSteps - 1);
-        }
+      if (isRejected) {
+        setActiveStep(displaySteps.length - 1);
+      } else {
+        const completedSteps = liveJobData.applicationStatus.filter(
+          (step) => step.status === 'completed'
+        ).length;
+        setActiveStep(completedSteps - 1);
+      }
     }
-}, [liveJobData, isRejected,displaySteps]);
+  }, [liveJobData, isRejected, displaySteps]);
 
   if (!job) return <div>Job not found!</div>;
-  
-  
+
+
 
   return (
     <div>
@@ -110,7 +110,9 @@ useEffect(() => {
               <span className="Opportunities-divider">|</span>
               <img src={experience} className='card-icons' alt="exp" /> {job.experience} yrs
               <span className="Opportunities-divider">|</span>
-              <img src={place} className='card-icons' alt="loc" /> {job.location}
+              <img src={place} className='card-icons' alt="loc" /> {Array.isArray(job.location)
+                ? job.location.join(", ")
+                : job.location || "N/A"}
             </p>
           </div>
 
@@ -170,7 +172,7 @@ useEffect(() => {
             <p><strong>Industry Type:</strong> {job.IndustryType}</p>
             <p><strong>Department:</strong> {job.Department}</p>
             <p><strong>Job Type:</strong> {job.WorkType}</p>
-            <p><strong>Location:</strong> {job.location}</p>
+            <p><strong>Location:</strong> {Array.isArray(job.location) ? job.location.join(", ") : job.location || "N/A"}</p>
 
             <h3>Key Skills</h3>
             <div className="opp-key-skills-container">
@@ -202,26 +204,26 @@ useEffect(() => {
           <Box sx={{ width: '100%', mt: 3 }}>
 
             <Stepper orientation="vertical" activeStep={isRejected ? 3 : activeStep} connector={<AnimatedConnector />}>
-  {displaySteps.map((step, index) => {
-    const isStepRejected = step.label === 'Rejected';
-    return (
-      <Step key={index} completed={isRejected ? index < 3 : index < activeStep}>
-        <StepLabel
-          error={isStepRejected}
-          optional={<Typography variant="caption">{step.sub}</Typography>}
-          sx={{
-            '& .MuiStepLabel-label': {
-              fontWeight: (index === (isRejected ? 3 : activeStep)) ? 700 : 400,
-              color: isStepRejected ? '#d32f2f' : 'inherit'
-            }
-          }}
-        >
-          {step.label}
-        </StepLabel>
-      </Step>
-    );
-  })}
-</Stepper>
+              {displaySteps.map((step, index) => {
+                const isStepRejected = step.label === 'Rejected';
+                return (
+                  <Step key={index} completed={isRejected ? index < 3 : index < activeStep}>
+                    <StepLabel
+                      error={isStepRejected}
+                      optional={<Typography variant="caption">{step.sub}</Typography>}
+                      sx={{
+                        '& .MuiStepLabel-label': {
+                          fontWeight: (index === (isRejected ? 3 : activeStep)) ? 700 : 400,
+                          color: isStepRejected ? '#d32f2f' : 'inherit'
+                        }
+                      }}
+                    >
+                      {step.label}
+                    </StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
           </Box>
 
           <div style={{ marginTop: '40px' }}>

@@ -144,7 +144,7 @@ export const JobApplication = () => {
             <span><img src={time} className="apply-form-card-icons" />{job.duration}</span>
             <span>₹ {job.salary} LPA</span>
             <span><img src={experience} className="apply-form-card-icons" />{job.experience} years</span>
-            <span><img src={place} className="apply-form-card-icons" />{job.location}</span>
+            <span><img src={place} className="apply-form-card-icons" />{Array.isArray(job.location) ? job.location.join(", ") : job.location || "N/A"}</span>
           </div>
         </div>
 

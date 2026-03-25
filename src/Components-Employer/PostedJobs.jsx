@@ -7,7 +7,7 @@ import { useJobs } from '../JobContext';
 export const PostedJobs = ({ onViewApplicants }) => {
   const navigate = useNavigate();
 
-  const { jobs, setJobs, getJobStats, currentEmployer,deleteJob, setCurrentEmployer ,setAlluser} = useJobs();
+  const { jobs, setJobs, getJobStats, currentEmployer, deleteJob, setCurrentEmployer, setAlluser } = useJobs();
 
   const [activeMenu, setActiveMenu] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -31,12 +31,12 @@ export const PostedJobs = ({ onViewApplicants }) => {
     setActiveMenu(null);
     setJobs(jobs.filter(job => job.id !== selectedJobId));
     setAlluser((prevUsers) =>
-            prevUsers.map((user) => ({
-                ...user,
-                savedJobs: user.savedJobs.filter((job) => job.id !== job),
-                appliedJobs: user.appliedJobs.filter((job) => job.id !== job),
-            }))
-        );
+      prevUsers.map((user) => ({
+        ...user,
+        savedJobs: user.savedJobs.filter((job) => job.id !== job),
+        appliedJobs: user.appliedJobs.filter((job) => job.id !== job),
+      }))
+    );
     setCurrentEmployer(prev => ({
       ...prev,
       jobPosted: prev.jobPosted.filter(job => job.id !== selectedJobId)
@@ -74,7 +74,9 @@ export const PostedJobs = ({ onViewApplicants }) => {
                   <h3>{job.jobTitle || job.title}</h3>
                   <p className="postedjobs-loc flex items-center gap-2">
                     <img src={place} alt="location" className="post-job-locationicon" />
-                    {job.location}
+                    {Array.isArray(job.location)
+                      ? job.location.join(", ")
+                      : job.location || "N/A"}
                   </p>
                   <small>Created on: {job.postedDate || job.posted}</small>
                 </div>

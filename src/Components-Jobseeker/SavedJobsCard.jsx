@@ -33,7 +33,7 @@ export const SavedJobsCard = ({ job }) => {
                 <div className="Opportunities-job-details">
                     <p className='Opportunities-detail-line'><img src={time} className='card-icons' alt="type" />{job.WorkType}<span className="Opportunities-divider">|</span>{job.salary} Lpa</p>
                     <p className='Opportunities-detail-line'><img src={experience} className='card-icons' alt="exp" />{job.experience} years</p>
-                    <p className='Opportunities-detail-line'><img src={place} className='card-icons' alt="loc" />{job.location}</p>
+                    <p className='Opportunities-detail-line'><img src={place} className='card-icons' alt="loc" />{Array.isArray(job.location) ? job.location.join(", ") : job.location || "N/A"}</p>
                     <p className='Opportunities-detail-line'><img src={calender} className='card-icons' alt="date" />{job.posted}<span className="Opportunities-divider">|</span>Openings: {job.openings}<span className="Opportunities-divider">|</span>Applicants: {job.applicants}</p>
                 </div>
 
