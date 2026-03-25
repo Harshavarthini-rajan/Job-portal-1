@@ -9,7 +9,7 @@ import { useJobs } from '../JobContext'
 
 export const SearchResults = () => {
     const { jobs } = useJobs()
-
+    
     // --- UI STATES (These control the checkboxes visually) ---
     const [minVal, setMinVal] = useState(0);
     const [maxVal, setMaxVal] = useState(100);
