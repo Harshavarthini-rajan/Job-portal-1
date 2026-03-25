@@ -16,8 +16,9 @@
 
 .page-title {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 50px;
   color: #0b0b0b;
+  font-weight: 500;
 }
 
 .analytics-content {
@@ -99,6 +100,8 @@
   border-right: 6px solid transparent;
   border-bottom: 10px solid;
   position: relative;
+  display: inline-block;
+  margin-right: 8px;
 }
 
 .triangle-legend::after {
@@ -113,16 +116,21 @@
   border-bottom: 6px solid #fdf8f8;
 }
 
-.jan, .triangle-legend.jan { border-bottom-color: #7b61ff; background-color: #7b61ff; }
-.feb, .triangle-legend.feb { border-bottom-color: #ff6b6b; background-color: #ff6b6b; }
-.mar, .triangle-legend.mar { border-bottom-color: #00bcd4; background-color: #00bcd4; }
-.yellow { background-color: #f4c542; }
-.purple { background-color: #7b61ff; }
-.green { background-color: #22c55e; }
+.triangle-legend.color-0 {
+  border-bottom-color: #7b61ff;
+}
+
+.triangle-legend.color-1 {
+  border-bottom-color: #ff6b6b;
+}
+
+.triangle-legend.color-2 {
+  border-bottom-color: #00bcd4;
+}
 
 .chart-label {
   margin: 0;
   font-weight: 700;
   color: #1a2b4b;
-  font-size: 1.1rem;
+  font-size: 22px;
 }

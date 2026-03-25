@@ -162,7 +162,7 @@ export const JobProvider = ({ children }) => {
         }
     ]
     )
-    const currentUserId = "2";
+    const currentUserId = "9";
     const currentUser = Alluser.find(user => user.id === currentUserId);
     const savedJobs = currentUser.savedJobs;  //created to show the data in Myjobs.jsx
     const appliedJobs = currentUser.appliedJobs; //created to show the data in Myjobs.jsx

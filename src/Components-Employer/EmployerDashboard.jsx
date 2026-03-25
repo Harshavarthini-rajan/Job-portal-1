@@ -33,7 +33,8 @@ import Findtalent from '../assets/Employer/FindTalent.png'
 import FindTalentAct from '../assets/Employer/FindTalent_Active.png'
 import { AboutYourCompany } from './AboutYourCompany'
 import place from '../assets/opportunity_location.png'
-import { Analyticspage } from './Analytics'
+import { Analyticspage } from './Analyticspage'
+import { Billings } from './Billings'
 
 
 export const EmployerDashboard = () => {
@@ -311,7 +312,7 @@ const jobStats = useMemo(() => {
                         
                     {activetab === 'Analytics' && (<Analyticspage />)}
                         
-                    {activetab === 'Billing' && (<h1>Interview Section</h1>)}
+                    {activetab === 'Billing' && (<Billings />)}
                         
                     {activetab === 'My Profile' && (<AboutYourCompany hideNavigation={true} setActiveTab={setActiveTab} />)}
                         
