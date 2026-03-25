@@ -122,9 +122,11 @@ export const SearchResults = () => {
     // search bar location with sidebar location checkbox
     useEffect(() => {
     if (searchLocation) {
-        setSelectedLocations([searchLocation.toLowerCase()]);
-    } else {
-        setSelectedLocations([]);
+        const lower = searchLocation.toLowerCase();
+        setSelectedLocations((prev) => {
+            if (prev.includes(lower)) return prev;
+            return [lower, ...prev]; 
+        });
     }}, [searchLocation]);
 
     // search bar experience with sidebar experience slider
@@ -247,16 +249,8 @@ export const SearchResults = () => {
 
     // --- CHECKBOX HANDLERS (Update UI state only) ---
     const handleLocationChange = (event) => {
-    const val = event.target.value;
-
-    let updatedLocations;
-    if (event.target.checked) {
-        updatedLocations = [val];
-    } else {
-        updatedLocations = [];
-    }
-    setSelectedLocations(updatedLocations);
-    setSearchLocation(updatedLocations[0] || "");
+        const val = event.target.value.toLowerCase();
+        setSelectedLocations((prev) => event.target.checked ? [...prev, val] : prev.filter((item) => item !== val));
     };
     const HandleWorkType = (event) => {
         const val = event.target.value;
@@ -292,7 +286,7 @@ export const SearchResults = () => {
                 job.company?.toLowerCase().includes(appliedFilters.query.toLowerCase()) ||
                 job.KeySkills.some(skill => skill.toLowerCase().includes(appliedFilters.query));
 
-            const matchesSearchBarLocation =
+            {/*const matchesSearchBarLocation =
                 appliedFilters.location === "" ||
                 (Array.isArray(job.location)
                     ? job.location.some(loc =>
@@ -300,7 +294,7 @@ export const SearchResults = () => {
                     )
                     : job.location
                         ? job.location.toLowerCase().includes(appliedFilters.location.toLowerCase())
-                        : false);
+                        : false); */}
 
             const JobExp = job.experience ? parseInt(job.experience.match(/\d+/)) : 0;
             let matchesSearchExp = true;
@@ -325,9 +319,8 @@ export const SearchResults = () => {
                     ? [job.location.toLowerCase()]
                     : ['unknown location'];
 
-            const matchesLocation =
-                sf.locations.length === 0 ||
-                jobLocations.some(loc => sf.locations.includes(loc));
+            const matchesCombinedLocation = (appliedFilters.location === "" && sf.locations.length === 0) ||
+            jobLocations.some(loc => (appliedFilters.location && loc.includes(appliedFilters.location.toLowerCase())) ||sf.locations.includes(loc));
 
             const jobWorkType = job.WorkType ? job.WorkType.toLowerCase() : 'unknown worktype';
             const matchesWorkType = sf.workType.length === 0 || sf.workType.includes(jobWorkType);
@@ -351,7 +344,7 @@ export const SearchResults = () => {
             const isBelowMax = sf.maxSalary >= 100 ? true : jobSalaryNum <= sf.maxSalary;
             const matchesSalary = isAboveMin && isBelowMax;
 
-            return matchesLocation && matchesWorkType && matchesPostedby && matchesCompany && matchesEducation && matchesPostedDate && matchesExperience && matchesIndustryType && matchesSalary && matchesSearch && matchesSearchBarLocation && matchesSearchExp;
+            return matchesCombinedLocation && matchesWorkType && matchesPostedby && matchesCompany && matchesEducation && matchesPostedDate && matchesExperience && matchesIndustryType && matchesSalary && matchesSearch && matchesSearchExp;
         });
     }, [jobs, appliedFilters, appliedSidebarFilters]); // Depends on Applied Filters
 
@@ -427,9 +420,9 @@ export const SearchResults = () => {
                                             type="checkbox"
                                             id={`location-${locationKey}`}
                                             name="location"
-                                            value={locationKey}
+                                            value={locationKey.toLowerCase()}
                                             onChange={handleLocationChange}
-                                            checked={selectedLocations.includes(locationKey)|| searchLocation.toLowerCase() === locationKey}
+                                            checked={selectedLocations.includes(locationKey.toLowerCase())}
                                         />
                                         <span className="location-text">{displayLocation}</span>
                                     </label>
