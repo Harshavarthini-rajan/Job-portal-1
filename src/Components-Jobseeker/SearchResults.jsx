@@ -9,7 +9,7 @@ import { useJobs } from '../JobContext'
 
 export const SearchResults = () => {
     const { jobs } = useJobs()
-    
+
     // --- UI STATES (These control the checkboxes visually) ---
     const [minVal, setMinVal] = useState(0);
     const [maxVal, setMaxVal] = useState(100);
@@ -121,31 +121,33 @@ export const SearchResults = () => {
 
     // search bar location with sidebar location checkbox
     useEffect(() => {
-    if (searchLocation) {
-        const lower = searchLocation.toLowerCase();
-        setSelectedLocations((prev) => {
-            if (prev.includes(lower)) return prev;
-            return [lower, ...prev]; 
-        });
-    }}, [searchLocation]);
+        if (searchLocation) {
+            const lower = searchLocation.toLowerCase();
+            setSelectedLocations((prev) => {
+                if (prev.includes(lower)) return prev;
+                return [lower, ...prev];
+            });
+        }
+    }, [searchLocation]);
 
     // search bar experience with sidebar experience slider
     useEffect(() => {
-    if (searchExp) {
-        if (searchExp === "fresher") {
-            setMinExp(0);
-            setMaxExp(0);
-        } else if (searchExp === "1-3") {
-            setMinExp(1);
-            setMaxExp(3);
-        } else if (searchExp === "3-5") {
-            setMinExp(3);
-            setMaxExp(5);
-        } else if (searchExp === "5+") {
-            setMinExp(5);
-            setMaxExp(30);
+        if (searchExp) {
+            if (searchExp === "fresher") {
+                setMinExp(0);
+                setMaxExp(0);
+            } else if (searchExp === "1-3") {
+                setMinExp(1);
+                setMaxExp(3);
+            } else if (searchExp === "3-5") {
+                setMinExp(3);
+                setMaxExp(5);
+            } else if (searchExp === "5+") {
+                setMinExp(5);
+                setMaxExp(30);
+            }
         }
-    }}, [searchExp]);
+    }, [searchExp]);
 
     // --- APPLIED STATE (This is what actually filters the list) ---
     const [appliedSidebarFilters, setAppliedSidebarFilters] = useState({
@@ -185,6 +187,15 @@ export const SearchResults = () => {
             minExp: minExp,
             maxExp: maxExp
         });
+
+        setSearchLocation("");
+        setSearchExp("");
+
+        setAppliedFilters((prev)=>({
+            ...prev,
+            location: "",
+            experience: ""
+        }));
     };
 
     const HandleClear = () => {
@@ -320,7 +331,7 @@ export const SearchResults = () => {
                     : ['unknown location'];
 
             const matchesCombinedLocation = (appliedFilters.location === "" && sf.locations.length === 0) ||
-            jobLocations.some(loc => (appliedFilters.location && loc.includes(appliedFilters.location.toLowerCase())) ||sf.locations.includes(loc));
+                jobLocations.some(loc => (appliedFilters.location && loc.includes(appliedFilters.location.toLowerCase())) || sf.locations.includes(loc));
 
             const jobWorkType = job.WorkType ? job.WorkType.toLowerCase() : 'unknown worktype';
             const matchesWorkType = sf.workType.length === 0 || sf.workType.includes(jobWorkType);
@@ -554,17 +565,17 @@ export const SearchResults = () => {
                         <div className="range-container">
                             <div className="slider-base-track" />
                             <div className="slider-active-range"
-                            style={{
-                                left: `${(minExp / 30) * 100}%`,
-                                width: `${((maxExp - minExp) / 30) * 100}%`
-                            }}
+                                style={{
+                                    left: `${(minExp / 30) * 100}%`,
+                                    width: `${((maxExp - minExp) / 30) * 100}%`
+                                }}
                             />
                             <input type="range"
                                 className="slider multi thumb-left"
                                 min="0"
                                 max="30"
                                 value={minExp}
-                                onChange={(e) =>setMinExp(Math.min(Number(e.target.value), maxExp - 1))}
+                                onChange={(e) => setMinExp(Math.min(Number(e.target.value), maxExp - 1))}
                             />
                             <input
                                 className="slider multi thumb-right"
@@ -572,7 +583,7 @@ export const SearchResults = () => {
                                 min="0"
                                 max="30"
                                 value={maxExp}
-                                onChange={(e) =>setMaxExp(Math.max(Number(e.target.value), minExp + 1))}
+                                onChange={(e) => setMaxExp(Math.max(Number(e.target.value), minExp + 1))}
                             />
                         </div>
                         <div className="salary-labels">
