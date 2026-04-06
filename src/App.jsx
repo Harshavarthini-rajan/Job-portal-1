@@ -19,7 +19,7 @@ import { MyProfile } from './Components-Jobseeker/MyProfile'
 import { JobsThroughCompany } from './Components-Jobseeker/JobsThroughCompany'
 import { AboutUs } from './Components-LandingPage/AboutUs'
 import { SearchResults } from './Components-Jobseeker/SearchResults'
-import { JobProvider } from './JobContext';
+import { JobProvider } from './JobContext'
 import { JobApplication } from './Components-Jobseeker/JobApplication'
 import { ApplicationStatusScreen } from './Components-Jobseeker/ApplicationStatusScreen'
 import { AppliedJobsOverview } from './Components-Jobseeker/AppliedJobsOverview'
@@ -57,12 +57,13 @@ import { EditJob } from './Components-Employer/EditJob'
 // import FindTalent2 from './Components-Employer/Findtalent2'
 // import { ProfileCard } from './Components-Employer/ProfileCard'
 import { JsProfileOverview } from './Components-Employer/JsProfileOverview'
+import { Alogin } from './Components-AdminSignup/Alogin'
+import { AdminDashboard } from './Components-Admin/AdminDashboard'
 
 const router = createBrowserRouter([{  path: '/',
   element: <Landingpage />
 }, 
 {
-  
   path: '/Job-portal',
   element: <Landingpage />,
 },
@@ -285,6 +286,14 @@ const router = createBrowserRouter([{  path: '/',
 {
   path:'/Job-portal/Employer/about-your-company/company-verification',
   element: <CompanyVerify/>
+},
+{
+  path:'/Job-portal/admin/login',
+  element: <Alogin />
+},
+{
+  path:'/Job-portal/admin/dashboard',
+  element: <AdminDashboard />
 }
 
 ])

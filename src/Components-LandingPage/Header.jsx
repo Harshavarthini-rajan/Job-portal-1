@@ -36,10 +36,6 @@ export const Header = () => {
   const newNotificationsCount = notificationsData
     ? notificationsData.filter(n => !n.isRead).length
     : 0;
-
-  console.log(newNotificationsCount)
-  console.log("Image to show:", newNotificationsCount > 0 ? "DOT ICON" : "NORMAL BELL");
-  //  const newNotificationsCount = notificationsData.filter(n => !n.isRead).length;
  
   const preventNav = (e) => {
     e.preventDefault();
@@ -127,7 +123,7 @@ export const Header = () => {
             <Link to="/Job-portal/jobseeker/login" className="login-btn">Login</Link>
             <Link to="/Job-portal/jobseeker/signup" className="signup-btn">Sign up</Link>
             <div className="separator"></div>
-            <Link to="/Job-portal/employer/login" className="emp-log-link">For Employers</Link>
+            <Link to="/Job-portal/employer/login" className="employer-redirect-link">For Employers</Link>
           </>
         )}
       </div>
