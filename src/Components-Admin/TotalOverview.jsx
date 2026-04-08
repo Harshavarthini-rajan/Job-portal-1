@@ -14,7 +14,7 @@ export const TotalOverview = () => {
   const total = data.reduce((acc, item) => acc + item.value, 0);
  
   // SVG Circle Logic
-  const radius = 70;
+  const radius = 80;
   const circumference = 2 * Math.PI * radius;
   let accumulatedOffset = 0;
  
@@ -40,7 +40,7 @@ export const TotalOverview = () => {
                 r={radius}
                 fill="transparent"
                 stroke={item.color}
-                strokeWidth="15"
+                strokeWidth="20"
                 strokeDasharray={`${strokeDasharray} ${circumference}`}
                 strokeDashoffset={strokeDashoffset}
                 transform="rotate(-90 100 100)"

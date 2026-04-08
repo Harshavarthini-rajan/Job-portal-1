@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "./AdminDashboard.css"
 import Dashboard from '../assets/Employer/DashboardIC.png'
 import DashboardInact from '../assets/Employer/Dashboard_Inactive.png'
-import UserManagement from '../assets/AdminAssets/UserManage.png'
+import Usermanagement from '../assets/AdminAssets/UserManage.png'
 import UserManagementACT from '../assets/AdminAssets/UserManageActive.png'
 import RoleManagement from '../assets/AdminAssets/RoleManage.png'
 import RoleManagementACT from '../assets/AdminAssets/RoleManageAct.png'
@@ -25,6 +25,8 @@ import TotalJobseekers from '../assets/AdminAssets/TotalJobseeker.png'
 import TotalCompanies from '../assets/AdminAssets/TotalCompanies.png'
 import ViewMore from '../assets/AdminAssets/ViewMore.png'
 import { TotalOverview } from './TotalOverview'
+import { AdminUserManagement } from './UserManagement'
+import { Footer } from '../Components-LandingPage/Footer'
 
 export const AdminDashboard = () => {
     const [activetab, setActiveTab] = useState('Dashboard');
@@ -65,7 +67,7 @@ export const AdminDashboard = () => {
                         <div onClick={() => setActiveTab('User Management')} className={activetab === "User Management" ? "Admin-Active" : 'Admin-Navbar'}>
                             <div className='Admin-Navbox'>
                                 {activetab === "User Management" ? <img src={UserManagementACT} width={15} height={15} alt="dashboard" />
-                                    : <img src={UserManagement} width={15} height={15} alt="User Management" />}
+                                    : <img src={Usermanagement} width={15} height={15} alt="User Management" />}
                                 <div className='Enav-item'>User Management</div>
                             </div>
                         </div>
@@ -119,7 +121,7 @@ export const AdminDashboard = () => {
                         <div>
                             <div className='Admin-Welcome-Container'>
                                 <p className='Admin-Welcome-Note'>Welcome Back, Admin</p>
-                                <p className='Admin-Welcome-para'>Your team’s success starts here. Let's make progress together!</p>
+                                <p className='Admin-Welcome-para'>Your team's success starts here. Let's make progress together!</p>
                             </div>
 
                             {/* Top Stats Overview */}
@@ -275,7 +277,7 @@ export const AdminDashboard = () => {
 
                     {activetab === 'Job Monitoring' && (<h3>Job Monitoring</h3>)}
                     {activetab === 'Activity Monitoring' && (<h3>Activity Monitoring</h3>)}
-                    {activetab === 'User Management' && (<h3>User Management</h3>)}
+                    {activetab === 'User Management' && (<AdminUserManagement />)}
                     {activetab === 'Role Management' && (<h3>Role Management</h3>)}
                     {activetab === 'Membership' && (<h3>Membership</h3>)}
                     {activetab === 'Tickets' && (<h3>Tickets</h3>)}
@@ -283,6 +285,7 @@ export const AdminDashboard = () => {
                     {activetab === 'settings' && (<h3>settings</h3>)}
                 </div>
             </div>
+            <Footer />
         </>
     )
 }
