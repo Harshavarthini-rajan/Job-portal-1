@@ -4,6 +4,10 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.Admin-Welcome-Container {
+  margin-bottom: 24px;
+}
 /* ---  Cards --- */
 .um-stats {
   display: flex;
@@ -263,4 +267,30 @@ td {
   overflow-y: auto;
   padding: 24px;
   width: 100%;
+}
+
+.action-wrapper {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 70px;
+  top: 2px;
+  background: #fcfdfd;
+  border-radius: 10px;
+  width: 120px;
+  box-shadow: 0 4px 12px rgba(18, 18, 18, 0.1);
+  overflow: hidden;
+}
+
+.dropdown-menu p {
+  padding: 4px;
+  margin: 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown-menu p:hover {
+  background: #b2cbd5;
 }

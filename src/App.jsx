@@ -57,7 +57,6 @@ import { EditJob } from './Components-Employer/EditJob'
 // import FindTalent2 from './Components-Employer/Findtalent2'
 // import { ProfileCard } from './Components-Employer/ProfileCard'
 import { JsProfileOverview } from './Components-Employer/JsProfileOverview'
-import { Alogin } from './Components-AdminSignup/Alogin'
 import { AdminDashboard } from './Components-Admin/AdminDashboard'
 
 const router = createBrowserRouter([{  path: '/',
@@ -286,10 +285,6 @@ const router = createBrowserRouter([{  path: '/',
 {
   path:'/Job-portal/Employer/about-your-company/company-verification',
   element: <CompanyVerify/>
-},
-{
-  path:'/Job-portal/admin/login',
-  element: <Alogin />
 },
 {
   path:'/Job-portal/admin/dashboard',
