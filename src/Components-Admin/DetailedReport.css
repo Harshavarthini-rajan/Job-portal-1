@@ -1,0 +1,41 @@
+
+
+ 
+.Reports-select {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #1E88E5;
+  position: relative;
+  padding: 10px 15px;
+  width: 300px;
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); */
+  border: 1px solid rgba(0, 0, 0, 0.15) ;
+}
+ 
+.Reports-select.Reports-active {
+  color: #fff;
+  border: 1px solid #1E88E5;
+  background-color: #1E88E5;
+  border-radius: 10px;
+  padding: 10px 15px;
+  width: 300px;
+ 
+}
+.toggle-Reports-main{
+    margin: 12px 25px;
+    /* border: 1px solid rgba(0, 0, 0, 0.15) ; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    gap: 50px;
+}
+ 
+ 
+ 

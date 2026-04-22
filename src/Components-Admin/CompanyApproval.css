@@ -1,0 +1,146 @@
+.company-container {
+  padding: 30px;
+  background-color: #f8f9fc; 
+  min-height: 100vh;
+}
+
+.title {
+  text-align: center;
+   margin-top: -10px;
+  margin-bottom: 30px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.table-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.approval-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 15px; /
+}
+
+.approval-table thead th {
+  text-align: left;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4b5563; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.approval-table tbody tr {
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s;
+}
+
+.approval-table tbody td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.approval-table tbody td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.approval-table tbody td {
+  padding: 20px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #374151;
+}
+
+.company-name {
+  font-weight: 500;
+  font-size: 14px !important;
+}
+
+/* .user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #72777f;
+}*/
+
+/* .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #d1d5db;
+}  */
+
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  min-width: 50px;
+}
+
+.badge.yes {
+  background-color: #22c55e;
+  color: white;
+}
+
+.badge.no {
+  background-color: #ef4444;
+  color: white;
+}
+
+.verification {
+  color: #9ca3af; 
+}
+
+.three-dots-icon {
+  width: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  opacity: 0.8;
+}
+
+.three-dots-icon:hover {
+  opacity: 1;
+}
+
+.menu-container {
+  position: relative;
+  text-align: center;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f3f4f6;
+  z-index: 50;
+  min-width: 120px;
+  overflow: hidden;
+}
+
+.dropdown button {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background-color: #f9fafb;
+  color: #2563eb;
+}
