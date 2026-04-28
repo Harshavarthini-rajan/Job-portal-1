@@ -35,6 +35,7 @@ import { AdminUserManagement } from './UserManagement'
 import { AdminMonitoring } from './AdminMonitoring'
 import { CompanyApproval } from './CompanyApproval'
 import {AdminReports} from './AdminReports'
+import { AdminMembership } from './AdminMembership'
 
 export const AdminDashboard = () => {
     const [activetab, setActiveTab] = useState('Dashboard');
@@ -387,7 +388,7 @@ export const AdminDashboard = () => {
                     {activetab === 'Company Approval' && (<CompanyApproval />)}
                     {activetab === 'User Management' && (<AdminUserManagement />)}
                     {activetab === 'Role Management' && (<h3>Role Management</h3>)}
-                    {activetab === 'Membership' && (<h3>Membership</h3>)}
+                    {activetab === 'Membership' && (<AdminMembership />)}
                     {activetab === 'Tickets' && (<h3>Tickets</h3>)}
                     {activetab === 'Reports' && (<AdminReports/>)}
                     {activetab === 'settings' && (<h3>settings</h3>)}
