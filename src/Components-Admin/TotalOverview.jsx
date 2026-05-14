@@ -1,6 +1,6 @@
 import React from 'react';
 import './TotalOverview.css';
- 
+
 export const TotalOverview = () => {
   const data = [
     { label: 'Recommended', value: 5, color: '#5b83ff' },
@@ -10,28 +10,27 @@ export const TotalOverview = () => {
     { label: 'Rejected', value: 1, color: '#ff7070' },
     { label: 'Hired', value: 0, color: '#cfd8dc' },
   ];
- 
+
   const total = data.reduce((acc, item) => acc + item.value, 0);
- 
-  // SVG Circle Logic
-  const radius = 80;
+  
+  const radius = 75;
   const circumference = 2 * Math.PI * radius;
   let accumulatedOffset = 0;
- 
+
   return (
     <div className="Admin-overview-card">
       <h2 className="Admin-overview-title">Total Overview</h2>
       <hr className="Admin-divider" />
-     
+      
       <div className="Admin-chart-container">
-        <svg width="200" height="200" viewBox="0 0 200 200">
+        <svg width="250" height="250" viewBox="0 0 200 200">
           {data.map((item, index) => {
             if (item.value === 0) return null;
-           
+            
             const strokeDasharray = (item.value / total) * circumference;
             const strokeDashoffset = -accumulatedOffset;
             accumulatedOffset += strokeDasharray;
- 
+
             return (
               <circle
                 key={index}
@@ -40,7 +39,7 @@ export const TotalOverview = () => {
                 r={radius}
                 fill="transparent"
                 stroke={item.color}
-                strokeWidth="20"
+                strokeWidth="25"
                 strokeDasharray={`${strokeDasharray} ${circumference}`}
                 strokeDashoffset={strokeDashoffset}
                 transform="rotate(-90 100 100)"
@@ -53,7 +52,7 @@ export const TotalOverview = () => {
           <text x="52%" y="60%" textAnchor="middle" className="Admin-total-label">Total Candidates</text>
         </svg>
       </div>
- 
+
       <div className="Admin-legend-grid">
         {data.map((item, index) => (
           <div key={index} className="Admin-legend-item">

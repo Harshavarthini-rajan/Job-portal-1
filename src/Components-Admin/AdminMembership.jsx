@@ -13,12 +13,12 @@ import LinkIcon from '../assets/AdminAssets/LinkIcon.png';
 import NumberList from '../assets/AdminAssets/NumberList.png';
 import PointList from '../assets/AdminAssets/PointList.png';
 import RedCross from '../assets/AdminAssets/RedCross.png';
-
+ 
 export const AdminMembership = () => {
   const editorRef = useRef(null);
   const [isDefault, setIsDefault] = useState(false);
   const [isTrialEnabled, setIsTrialEnabled] = useState(false);
-  const [isAutoRenewal, setIsAutoRenewal] = useState(false)
+  const [isAutoRenewal, setIsAutoRenewal] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
   //Form Data

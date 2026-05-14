@@ -2,35 +2,35 @@ import React, { useState } from "react";
 import "./FinancialReport.css";
 import PlatformTraffic from '../assets/AdminAssets/PlatformTraffic.png';
 import SessionTime from '../assets/AdminAssets/SessionTime.png';
-import Star from '../assets/AdminAssets/StarIcon.png';
+import Star from '../assets/AdminAssets/Star_Icon.png';
 import GlobalTech from '../assets/AdminAssets/GlobalTech.png';
 import DynamicCreative from '../assets/AdminAssets/DynamicCreative.png';
 import UnifiedMedia from '../assets/AdminAssets/UnifiedMedia.png';
-
+ 
 export const FinancialReport = () => {
   const [showMore, setShowMore] = useState(false);
-
+ 
   return (
     <div className="financial-container">
-
+ 
       <div className="report-header">
         <h1>Financial Intelligence</h1>
         <p>Reporting for period March 1st — March 24th, 2026</p>
       </div>
-
+ 
       {/* Top Section */}
       <div className="top-cards">
-
+ 
         <div className="revenue-card-primary">
           <p className="card-title">TOTAL GROSS REVENUE</p>
           <h1>$4,281,902.50</h1>
-          
+         
           <div className="growth-badge trend-up">
-            <span className="trend-arrow">↗</span> 
+            <span className="trend-arrow">↗</span>
             <span className="trend-value">+12.4%</span>
             <span className="vs">vs. previous month</span>
           </div>
-
+ 
           <div className="sub-data">
             <div className="data-item">
               <p>SUBSCRIPTION</p>
@@ -42,7 +42,7 @@ export const FinancialReport = () => {
             </div>
           </div>
         </div>
-
+ 
         <div className="side-cards">
           <div className="mini-card">
             <div className="mini-header">
@@ -54,7 +54,7 @@ export const FinancialReport = () => {
               <div className="progress-fill" style={{ width: "70%" }}></div>
             </div>
           </div>
-
+ 
           <div className="mini-card">
             <div className="mini-header">
               <p className="mini-title">AVG. SESSION TIME</p>
@@ -71,7 +71,7 @@ export const FinancialReport = () => {
           </div>
         </div>
       </div>
-
+ 
       <div className="middle-grid">
         <div className="chart-card">
           <div className="chart-header">
@@ -81,7 +81,7 @@ export const FinancialReport = () => {
               <span className="leg-item"><span className="dot blue"></span> Conv %</span>
             </div>
           </div>
-
+ 
           <div className="visual-chart">
             {[
               { day: "MON", gray: "40%", blue: "0%" },
@@ -107,31 +107,31 @@ export const FinancialReport = () => {
             ))}
           </div>
         </div>
-
+ 
         <div className="insight-card">
           <h4>Employer Tier Insights</h4>
-          
+         
           <div className="tier-row">
             <div className="tier-content">
               <span className="tier-name">Premium Enterprise</span>
               <span className="tier-count">124 <b>accounts</b></span>
             </div>
           </div>
-
+ 
           <div className="tier-row">
             <div className="tier-content">
               <span className="tier-name">Mid-Market Growth</span>
               <span className="tier-count">482 <b>accounts</b></span>
             </div>
           </div>
-
+ 
           <div className="tier-row no-border">
             <div className="tier-content">
               <span className="tier-name">Standard Basic</span>
               <span className="tier-count">2.1k <b>accounts</b></span>
             </div>
           </div>
-
+ 
           <div className="star-highlight">
             <div className="star-circle">
               <img src={Star} alt="Star" className="star-img" />
@@ -143,7 +143,7 @@ export const FinancialReport = () => {
           </div>
         </div>
       </div>
-
+ 
       {/* Table Section */}
       <div className="revenue-table-container">
         <h2 className="revenue-title">Recent Ad Revenue & Payments</h2>

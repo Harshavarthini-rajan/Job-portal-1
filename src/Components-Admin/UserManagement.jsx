@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './UserManagement.css'
 import { useJobs } from '../JobContext'
 import Searchicon from '../assets/icon_search.png'
@@ -6,34 +6,37 @@ import leftArrow from '../assets/left_arrow.png'
 import rightArrow from '../assets/right_arrow.png'
 import threedots from '../assets/ThreeDots.png'
 
-export const AdminUserManagement = () => {
+export const UserManagement = () => {
   const { Alluser, currentEmployer } = useJobs()
   const [search, setSearch] = useState("")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [usersData, setUsersData] = useState([])
-  const [openMenuId, setOpenMenuId] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeMenuId, setActiveMenuId] = useState(null); 
+  const recordsPerPage = 5;
 
-  const recordsPerPage = 5
 
-  //  Initialize Users
-  useEffect(() => {
-    const data = [...Alluser.map((user) => {
-      let status = "Active"
-      return { ...user, status }}),
-      {
-        id: currentEmployer.id,
-        role: "employer",
-        status: "Active",
-        profile: { fullName: currentEmployer.hrName },
-        contact: { email: currentEmployer.email, city: "Chennai" }
-      }
-    ]
+  const [usersList, setUsersList] = useState([
+    ...Alluser.map((user, index) => {
+      let status = "Active";
+      if (index === 3 || index === 5) status = "Hold";
+      if (index === 4) status = "Deactivated";
+      return { ...user, status };
+    }),
+    {
+      id: currentEmployer.id,
+      role: "employer",
+      status: "Active",
+      profile: { fullName: currentEmployer.hrName },
+      contact: { email: currentEmployer.email, city: "Chennai" },
+      joinDate:currentEmployer.joinDate
+    }
+  ]);
 
-    setUsersData(data)
-  }, [Alluser, currentEmployer])
+  const handleStatusChange = (id, newStatus) => {
+    setUsersList(prev => prev.map(u => u.id === id ? { ...u, status: newStatus } : u));
+    setActiveMenuId(null);
+  };
 
-  //  Filter
-  const filteredUsers = usersData.filter((user) => {
+  const filteredUsers = usersList.filter((user) => {
     const name = user.profile.fullName.toLowerCase()
     const email = user.contact.email.toLowerCase()
     const role = user.role ? user.role : "candidate"
@@ -45,46 +48,34 @@ export const AdminUserManagement = () => {
     )
   })
 
-  //  Stats
-  const totalUsers = usersData.length
-  const candidates = usersData.filter(u => u.role !== "employer").length
-  const employers = usersData.filter(u => u.role === "employer").length
-  const activeNow = usersData.filter(u => u.status === "Active").length
+  // Dynamic Stats logic
+  const totalUsers = usersList.length
+  const candidates = usersList.filter(u => u.role !== "employer").length
+  const employers = usersList.filter(u => u.role === "employer").length
+  const activeNow = usersList.filter(u => u.status === "Active").length
 
-  //  Pagination
-  const lastIndex = currentPage * recordsPerPage
-  const firstIndex = lastIndex - recordsPerPage
-  const currentRecords = filteredUsers.slice(firstIndex, lastIndex)
-  const nPages = Math.ceil(filteredUsers.length / recordsPerPage)
+  // Pagination Logic
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const currentRecords = filteredUsers.slice(firstIndex, lastIndex);
+  const nPages = Math.ceil(filteredUsers.length / recordsPerPage);
 
-  const prevPage = () => { if (currentPage !== 1) setCurrentPage(currentPage - 1) }
-  const nextPage = () => { if (currentPage !== nPages) setCurrentPage(currentPage + 1) }
-
-  //  Update Status
-  const updateStatus = (id, newStatus) => {
-    const updated = usersData.map(user =>
-      user.id === id ? { ...user, status: newStatus } : user
-    )
-    setUsersData(updated)
-    setOpenMenuId(null)
-  }
+  const prevPage = () => { if (currentPage !== 1) setCurrentPage(currentPage - 1) };
+  const nextPage = () => { if (currentPage !== nPages) setCurrentPage(currentPage + 1) };
 
   const formatDate = (dateString) => {
-    if (!dateString) return "Oct 24, 2023"
-    const options = { year: 'numeric', month: 'short', day: 'numeric' }
-    return new Date(dateString).toLocaleDateString(undefined, options)
+    if (!dateString) return "Oct 24, 2023";
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
   return (
     <div className="user-management-container">
-
-      {/* Header */}
-      <div className='Admin-Welcome-Container'>
-        <p className='Admin-Welcome-Note'>User Management</p>
-        <p className='Admin-Welcome-para'>Manage and monitor all platform members and their activity.</p>
+      <div style={{ marginBottom: "25px" }} className='Admin-Welcome-Container'>
+        <p style={{margin:"5px 0"}} className='Admin-Welcome-Note' >User Management</p>
+        <p style={{margin:"5px 0"}} className='Admin-Welcome-para'>Manage and monitor all platform members and their activity.</p>
       </div>
 
-      {/* Stats */}
       <div className="um-stats">
         <div className="um-card"><p>Total Users</p><h3>{totalUsers}</h3></div>
         <div className="um-card green"><p>Active Now</p><h3>{activeNow}</h3></div>
@@ -92,25 +83,21 @@ export const AdminUserManagement = () => {
         <div className="um-card black"><p>Employers</p><h3>{employers}</h3></div>
       </div>
 
-      {/* Search */}
       <div className="um-search-container">
         <div className="search-wrapper">
-          <span className="search-icon">
-            <img src={Searchicon} alt="Search" />
-          </span>
+          <span className="search-icon"><img src={Searchicon} alt="Search" /></span>
           <input
             type="text"
             placeholder="Search by name, email or Role"
             value={search}
             onChange={(e) => {
-              setSearch(e.target.value)
-              setCurrentPage(1)
+              setSearch(e.target.value);
+              setCurrentPage(1);
             }}
           />
         </div>
       </div>
 
-      {/* Table */}
       <div className="um-table">
         <table>
           <thead>
@@ -122,11 +109,11 @@ export const AdminUserManagement = () => {
               <th>Actions</th>
             </tr>
           </thead>
-
           <tbody>
-            {currentRecords.map((user) => {
+            
+            {[...currentRecords].reverse().map((user) => {
               const isEmployer = user.role === "employer"
-              const rawDate = isEmployer? null : user.experience?.entries?.[0]?.startDate
+              const rawDate =  user.joinDate;
 
               return (
                 <tr key={user.id}>
@@ -141,38 +128,50 @@ export const AdminUserManagement = () => {
                       </div>
                     </div>
                   </td>
-                  <td>
+                  <td style={{ textAlign: "center" }}>
                     <span className={`role ${isEmployer ? 'employer' : 'candidate'}`}>
                       {isEmployer ? "Employer" : "Candidate"}
                     </span>
                   </td>
-                  <td>
-                    <span className={`status ${user.status.toLowerCase()}`}>
-                      {user.status}
+                  <td style={{ textAlign: "center" }}>
+                    <span className={`status ${user.status?.toLowerCase() || 'active'}`}>
+                      {user.status || "Active"}
                     </span>
                   </td>
-                  <td className="joined-date">
-                    {formatDate(rawDate)}
+                  <td style={{ textAlign: "center" }} className="joined-date">
+                    {user.joinDate}
                   </td>
-
-                  {/*  Actions */}
                   <td className="um-actions">
-                    <div className="action-wrapper">
-                      <img
-                        src={threedots}
-                        alt="options"
-                        className="action-icon"
-                        onClick={() =>setOpenMenuId(openMenuId === user.id ? null : user.id)}
-                      />
+                    <img
+                      src={threedots}
+                      alt="options"
+                      className="action-icon"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setActiveMenuId(activeMenuId === user.id ? null : user.id)}
+                    />
 
-                      {openMenuId === user.id && (
-                        <div className="dropdown-menu">
-                          <p onClick={() => updateStatus(user.id, "Active")}>Active</p>
-                          <p onClick={() => updateStatus(user.id, "Hold")}>Hold</p>
-                          <p onClick={() => updateStatus(user.id, "Deactivated")}>Deactivate</p>
-                        </div>
-                      )}
-                    </div>
+                    {activeMenuId === user.id && (
+                      <div className="status-dropdown">
+                        {user.status === "Active" && (
+                          <>
+                            <button onClick={() => handleStatusChange(user.id, "Deactivated")}>Deactivate</button>
+                            <button onClick={() => handleStatusChange(user.id, "Hold")}>Hold</button>
+                          </>
+                        )} 
+                        {user.status === "Hold" && (
+                          <>
+                            <button onClick={() => handleStatusChange(user.id, "Deactivated")}>Deactivate</button>
+                            <button onClick={() => handleStatusChange(user.id, "Active")}>Activate</button>
+                          </>
+                        )}
+                        {user.status === "Deactivated" && (
+                          <>
+                            <button onClick={() => handleStatusChange(user.id, "Active")}>Activate</button>
+                            <button onClick={() => handleStatusChange(user.id, "Hold")}>Hold</button>
+                          </>
+                        )} 
+                      </div>
+                    )}
                   </td>
                 </tr>
               )
@@ -180,7 +179,6 @@ export const AdminUserManagement = () => {
           </tbody>
         </table>
 
-        {/* Pagination */}
         <div className="pagination-footer">
           <p>Page {currentPage} of {nPages}</p>
           <div className="pagination-btns">

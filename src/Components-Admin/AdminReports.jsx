@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import YellowProfile from '../assets/AdminAssets/UserReg.png'
+import YellowProfile from '../assets/AdminAssets/YellowBGProfile.png'
 import CensusDown from '../assets/AdminAssets/CENSUS_DOWN.png'
 import CensusUp from '../assets/AdminAssets/CENSUS_UP.png'
-import Revenue from '../assets/AdminAssets/TotalRevenue.png'
-import Application from '../assets/AdminAssets/TotalApplicants.png'
+import Revenue from '../assets/AdminAssets/Revenue.png'
+import Application from '../assets/AdminAssets/TotalApplication.png'
 import TotalJobsPosted from '../assets/AdminAssets/TotalJobsPosted.png'
-import TotalSubscribers from '../assets/AdminAssets/TotalSubs.png'
-import RightArrow from '../assets/right_arrow.png'
+import TotalSubscribers from '../assets/AdminAssets/TotalSubscribers.png'
+import RightArrow from '../assets/AdminAssets/RightArrow.png'
 import './AdminReports.css'
 import {
   LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -14,12 +14,12 @@ import {
 } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 import { DetailedReport } from './DetailedReport';
- 
- 
+
+
 export const AdminReports = () => {
   const [mode, SetMode]=useState('Reports and Analytics');
   const navigate =useNavigate();
- 
+  
   const UserGrowth = [
     { name: 'Aug', users: 750 },
     { name: 'Sep', users: 200 },
@@ -31,7 +31,7 @@ export const AdminReports = () => {
     { name: 'Mar', users: 960 },
     { name: 'Apr', users: 250 },
   ];
- 
+
   const JobPostings = [
     { name: 'Aug', postings: 120 },
     { name: 'Sep', postings: 200 },
@@ -43,23 +43,23 @@ export const AdminReports = () => {
     { name: 'Mar', postings: 330 },
     { name: 'Apr', postings: 400 },
   ];
- 
+
   const Activities = [
     { name: 'Jan', newUsers: 300, jobsPosted: 200, subscribers: 400 },
     { name: 'Feb', newUsers: 300, jobsPosted: 200, subscribers: 400 },
     { name: 'Mar', newUsers: 300, jobsPosted: 200, subscribers: 400 },
     { name: 'Apr', newUsers: 300, jobsPosted: 200, subscribers: 400 },
   ];
- 
+
   const PopularJobs = [
     { name: 'Other Jobs', value: 40, color: '#ffab5e' },
     { name: 'Full Stack Developer', value: 25, color: '#8b78ff' },
     { name: 'Front End Developer', value: 20, color: '#ff928a' },
     { name: 'UI/UX Designer', value: 15, color: '#4cc3db' },
   ];
- 
- 
- 
+
+
+
   const LegendItem = ({ color, label }) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
       <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: color }} />
@@ -67,21 +67,21 @@ export const AdminReports = () => {
     </div>
   );
   return (
-   
+    
     <>
     {mode === "Reports and Analytics" && (
       <>
       <h2 style={{fontWeight: "500" }}>Reports and Analytics</h2>
       <div className='Admin-Reports-Overview'>
- 
+
         <div className="admin-card-container">
           <div className="admin-card-header">
             <img src={YellowProfile} width={30} alt="New User" />
             <h3 className="admin-card-title">Total Users</h3>
           </div>
- 
+
           <hr className="admin-divider" />
- 
+
           <div className="admin-stats-row">
             <div className="admin-stat-value-group">
               <span style={{ fontSize: "16px" }}>245</span>
@@ -98,9 +98,9 @@ export const AdminReports = () => {
             <img src={TotalJobsPosted} width={30} alt="New User" />
             <h3 className="admin-card-title">Total Jobs Posted</h3>
           </div>
- 
+
           <hr className="admin-divider" />
- 
+
           <div className="admin-stats-row">
             <div className="admin-stat-value-group">
               <span style={{ fontSize: "16px" }}>245</span>
@@ -114,14 +114,14 @@ export const AdminReports = () => {
         </div>
         <div className="admin-card-container">
           <div className="admin-card-header">
- 
+
             <img src={Application} width={30} alt="New User" />
- 
+
             <h3 className="admin-card-title">Total Applications</h3>
           </div>
- 
+
           <hr className="admin-divider" />
- 
+
           <div className="admin-stats-row">
             <div className="admin-stat-value-group">
               <span style={{ fontSize: "16px" }}>245</span>
@@ -135,14 +135,14 @@ export const AdminReports = () => {
         </div>
         <div className="admin-card-container">
           <div className="admin-card-header">
- 
+
             <img src={Revenue} width={30} alt="New User" />
- 
+
             <h3 className="admin-card-title">Totals Revenue</h3>
           </div>
- 
+
           <hr className="admin-divider" />
- 
+
           <div className="admin-stats-row">
             <div className="admin-stat-value-group">
               <span style={{ fontSize: "16px" }}>245</span>
@@ -156,14 +156,14 @@ export const AdminReports = () => {
         </div>
         <div className="admin-card-container">
           <div className="admin-card-header">
- 
+
             <img src={TotalSubscribers} width={30} alt="New User" />
- 
+
             <h3 className="admin-card-title">Totals Subscribers</h3>
           </div>
- 
+
           <hr className="admin-divider" />
- 
+
           <div className="admin-stats-row">
             <div className="admin-stat-value-group">
               <span style={{ fontSize: "16px" }}>245</span>
@@ -175,11 +175,11 @@ export const AdminReports = () => {
             </div>
           </div>
         </div>
- 
+
       </div>
-     
+      
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: '15px',margin:"10px" }}>
- 
+
         <div style={{ padding: "20px", border: '1px solid #767676', borderRadius: "15px" }}>
           <div style={{
             width: '100%',
@@ -190,19 +190,19 @@ export const AdminReports = () => {
             <h2 style={{ fontFamily: 'sans-serif', color: '#333', marginBottom: '20px', paddingLeft: "40px" }}>
               User Growth
             </h2>
- 
+
             <ResponsiveContainer width="100%" height="70%">
               <AreaChart data={UserGrowth} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
                 <defs>
- 
+
                   <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                   </linearGradient>
                 </defs>
- 
+
                 <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#eee" />
- 
+
                 <XAxis
                   dataKey="name"
                   axisLine={false}
@@ -210,15 +210,15 @@ export const AdminReports = () => {
                   tick={{ fill: '#888', fontSize: 12 }}
                   dy={10}
                 />
- 
+
                 <YAxis
                   axisLine={false}
                   tickLine={false}
                   tick={{ fill: '#888', fontSize: 12 }}
                 />
- 
+
                 <Tooltip />
- 
+
                 <Area
                   type="monotone"
                   dataKey="users"
@@ -231,17 +231,17 @@ export const AdminReports = () => {
             </ResponsiveContainer>
           </div>
         </div>
- 
+
         <div style={{ padding: "20px", border: '1px solid #767676', borderRadius: "15px" }}>
           <div style={{
             width: '100%',
             height: 400,
             borderRadius: '15px',
-            // boxShadow: '0px 0px 15px rgba(0,0,0,0.05)'
+            // boxShadow: '0px 0px 15px rgba(0,0,0,0.05)' 
             // border: '1px solid black'
           }}>
             <h2 style={{ fontFamily: 'sans-serif', color: '#333', marginBottom: '20px', paddingLeft: "40px" }}>Job Postings</h2>
- 
+
             <div style={{ width: '100%', height: '70%' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -264,7 +264,7 @@ export const AdminReports = () => {
                     domain={[0, 500]}
                     ticks={[0, 100, 200, 300, 400, 500]}
                   />
- 
+
                   {/* background "track" effect using background property */}
                   <Bar
                     dataKey="postings"
@@ -277,20 +277,20 @@ export const AdminReports = () => {
             </div>
           </div>
         </div>
- 
+
         <div style={{ padding: "20px", border: '1px solid #767676', borderRadius: "15px" }}>
           <div style={{
             width: '100%',
             height: 400,
             backgroundColor: '#fff',
             borderRadius: '12px',
- 
+
             fontFamily: 'sans-serif'
           }}>
             <h2 style={{ fontFamily: 'sans-serif', color: '#333', marginBottom: '20px', paddingLeft: "40px" }}>
               Activities
             </h2>
- 
+
             <ResponsiveContainer width="100%" height="70%">
               <AreaChart data={Activities} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
@@ -307,7 +307,7 @@ export const AdminReports = () => {
                     <stop offset="95%" stopColor="#D946EF" stopOpacity={0} />
                   </linearGradient>
                 </defs>
- 
+
                 <CartesianGrid vertical={false} stroke="#eee" />
                 <XAxis
                   dataKey="name"
@@ -324,7 +324,7 @@ export const AdminReports = () => {
                   ticks={[0, 100, 200, 300, 400, 500]}
                 />
                 <Tooltip />
- 
+
                 <Area
                   type="monotone"
                   dataKey="newUsers"
@@ -351,24 +351,24 @@ export const AdminReports = () => {
                 />
               </AreaChart>
             </ResponsiveContainer>
- 
+
             {/* Custom Legend */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '20px' }}>
               <LegendItem color="#0095FF" label="New Users" />
               <LegendItem color="#FF4D4D" label="Jobs Posted" />
               <LegendItem color="#D946EF" label="Subscribers" />
             </div>
- 
+
           </div>
         </div>
- 
+
         <div style={{ padding: "20px", border: '1px solid #767676', borderRadius: "15px" }}>
            <div style={{
             width: '100%',
             height: 400,
             backgroundColor: '#fff',
             borderRadius: '12px',
- 
+
             fontFamily: 'sans-serif'
           }}>
       <h2 style={{ fontFamily: 'sans-serif', color: '#333', marginBottom: '20px', paddingLeft: "40px" }}>Popular Jobs</h2>
@@ -393,12 +393,12 @@ export const AdminReports = () => {
           </PieChart>
         </ResponsiveContainer>
       </div>
- 
+
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",justifyContent:"center" }} >
         {PopularJobs.map((item, index) => (
           <div key={index} style={{display:"flex", alignItems:"center",gap:"5px ",margin:"10px",}}>
-            <span
-              className="legend-dot"
+            <span 
+              className="legend-dot" 
               style={{ backgroundColor: item.color }}
             ></span>
             <span className="legend-text">{item.name}</span>
@@ -418,10 +418,9 @@ export const AdminReports = () => {
       </div>
       </>
     )}
- 
+
     {mode === "Detailed Report" && (
       <>
-     
       <DetailedReport SetMode={SetMode}/>
       </>
     )}
