@@ -203,6 +203,7 @@ export const JobSeekerSettings = () => {
                 className="jobset-arrow-icon"
                 alt="arrow"
                 onClick={(e) => handleDropdownArrowClick(e, startRef)}
+                width={15}
               />
             </div>
             <div className="jobset-field">
@@ -233,10 +234,10 @@ export const JobSeekerSettings = () => {
             <div className="jobset-pref-box">
               <h4>Other Preferences</h4>
               <PrefItem label="Show Salary in Job Listings" active={formData.salary} onToggle={() => toggleSwitch('salary')} />
-              <PrefItem label="Show Company Reviews" active={formData.reviews} onToggle={() => toggleSwitch('reviews')} />
+              {/* <PrefItem label="Show Company Reviews" active={formData.reviews} onToggle={() => toggleSwitch('reviews')} /> */}
               <PrefItem label="Show Application Status" active={formData.appStatus} onToggle={() => toggleSwitch('appStatus')} />
               <PrefItem label="View Similar Jobs" active={formData.similarJobs} onToggle={() => toggleSwitch('similarJobs')} />
-              <PrefItem label="Career Advice Section" active={formData.advice} onToggle={() => toggleSwitch('advice')} />
+              {/* <PrefItem label="Career Advice Section" active={formData.advice} onToggle={() => toggleSwitch('advice')} /> */}
             </div>
           </div>
         </div>
@@ -270,7 +271,6 @@ export const JobSeekerSettings = () => {
       <p className="jobset-field-desc">Limit applications per day</p>
       <div className="jobset-input-wrapper">
       <input type="number" name="maxApps" className="jobset-input" value={formData.maxApps} onChange={handleChange} />
-      {/* Number input-ku custom arrows image iruntha inga add pannunga, illana CSS la handle pannalam */}
      </div>
     </div>
  

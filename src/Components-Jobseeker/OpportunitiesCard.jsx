@@ -3,8 +3,10 @@ import './OpportunitiesCard.css'
 import time from '../assets/opportunity_time.png'
 import experience from '../assets/opportunity_bag.png'
 import place from '../assets/opportunity_location.png'
+import Highlight from '../assets/Employer/HighLight-Active.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useJobs } from '../JobContext';
+import { flex } from '@mui/system'
 
 export function formatPostedDate(dateString) {
     const postedDate = new Date(dateString);
@@ -25,6 +27,7 @@ export function formatPostedDate(dateString) {
 export const OpportunitiesCard = (props) => {
     const { job } = props
     const logoContent = job.logo ? (<img src={job.logo} alt={job.company} className="Opportunities-job-logo" />) : (<div className="Opportunities-job-logo-placeholder">{job.company.charAt(0).toUpperCase()}</div>)
+    // const IsHighLigted= job.isHighlighted ? (<img src={Highlight} width={20} alt={job.isHighlighted}/>):(<></>);
     const navigate = useNavigate()
     const HandleClick = () => {
         navigate(`/Job-portal/jobseeker/OpportunityOverview/${job.id}`)
@@ -39,11 +42,18 @@ export const OpportunitiesCard = (props) => {
             <div onClick={() => HandleClick()}>
                 <div className="Opportunities-job-header">
                     <div>
-                        <h3 className="Opportunities-job-title">{job.title}</h3>
+                        <div style={{display:"flex",alignItems:"center",gap:"15px"}} >
+                        <h3 className='Opportunities-job-title'>{job.title} </h3>
+                        {job.isHighlighted ? <img   src={Highlight} width={22} alt="" /> :<></>} 
+                        </div>
+                        <div>
                         <p className="Opportunities-job-company">{job.company}</p>
+                        </div>
                     </div>
                     {logoContent}
+                    
                 </div>
+                
                 
                 <div className="Opportunities-job-details">
                     <p className='Opportunities-detail-line'><img src={time} className='card-icons' />{job.duration}<span className="Opportunities-divider">|</span>₹ {job.salary} Lpa</p>

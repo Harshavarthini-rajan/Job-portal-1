@@ -32,7 +32,8 @@ export const Footer = () => {
         <div className="footer-link-section">
           <h3>Job Seekers</h3>
           <ul>
-            <li>Create Profile</li>
+              {/* added the Onclick for create profile only for view Purpose, need to remove after integration             */}
+            <li onClick={()=>navigate('/Job-portal/Admin/Dashboard')}>Create Profile</li>
             <li>Browse Jobs</li>
             <li>Saved Jobs</li>
             <li>Application Status</li>

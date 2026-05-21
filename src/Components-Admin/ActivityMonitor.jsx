@@ -13,10 +13,10 @@ import RedProfile from '../assets/AdminAssets/RedBGProfile.png'
 import SupportTicket from '../assets/AdminAssets/SupportTicket.png'
 import Msgsent from '../assets/AdminAssets/Msgsent.png'
 import EmailsSent from '../assets/AdminAssets/EmailsSent.png'
-export const ActivityMonitor = () => {
+export const ActivityMonitor = ({initialTab}) => {
 
 
-  const [activeTab, setActiveTab] = useState("AdminMonitor");
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
   const [companyData, setCompanyData] = useState([

@@ -33,30 +33,37 @@ import Findtalent from '../assets/Employer/FindTalent.png'
 import FindTalentAct from '../assets/Employer/FindTalent_Active.png'
 import { AboutYourCompany } from './AboutYourCompany'
 import place from '../assets/opportunity_location.png'
-import { AnalyticsPage } from './Analyticspage'
-import { Billings } from './Billings'
+import { AnalyticsPage } from './AnalyticsPage'
+import { LogoutModal } from '../Components-JobseekerSignup/LogoutModal'
+import { BillingSec } from './BillingSec'
+import { PlansBilling } from './PlansBilling'
+
 
 
 export const EmployerDashboard = () => {
     const { currentEmployer, getJobStats } = useJobs();
-
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const PostedJob = currentEmployer.jobPosted;
-    
-const jobStats = useMemo(() => {
-    return currentEmployer?.jobPosted?.reduce((acc, job) => {
-        const stats = getJobStats(job.id)
-        acc.totalApps += (stats.total || 0);
-        acc.totalShortlisted += (stats.screening || 0); 
-        acc.totalInterview += (stats.interview || 0);
-        return acc;
-    }, { totalApps: 0, totalShortlisted: 0, totalInterview: 0 });
-}, [currentEmployer?.jobPosted, getJobStats]);
+
+    const jobStats = useMemo(() => {
+        return currentEmployer?.jobPosted?.reduce((acc, job) => {
+            const stats = getJobStats(job.id)
+            acc.totalApps += (stats.total || 0);
+            acc.totalShortlisted += (stats.shortlisted || 0);
+            acc.totalInterview += (stats.interview || 0);
+            return acc;
+        }, { totalApps: 0, totalShortlisted: 0, totalInterview: 0 });
+    }, [currentEmployer?.jobPosted, getJobStats]);
 
 
     const activeJobsCount = currentEmployer.jobPosted.length;
 
+    const handleLogoutConfirm = () => {
+        setShowLogoutModal(false);
+        navigate('/Job-portal');
+    };
     const navigate = useNavigate();
-    
+
     const [activeMenu, setActiveMenu] = useState(null);
     const initialLetter = currentEmployer?.hrName.charAt(0).toUpperCase();
 
@@ -141,9 +148,10 @@ const jobStats = useMemo(() => {
                                     {activetab === 'My Profile' ? <img src={ProfileAct} height={15} width={15} alt="My Profile" /> : <img src={Profile} height={15} width={15} alt="My Profile" />}
                                     <div className='Enav-item'>My Profile</div>
                                 </div>
-                                <div onClick={() => !isVerifying && setActiveTab('Logout')} className={activetab === 'Logout' ? "Active" : 'Navbox'} >
+
+                                <div onClick={() => !isVerifying && setShowLogoutModal(true)} className={activetab === 'Logout' ? "Active" : 'Navbox'}>
                                     {activetab === 'Logout' ? <img src={LogoutAct} height={15} width={15} alt="Logout" /> : <img src={Logout} height={15} width={15} alt="Logout" />}
-                                    <div onClick={()=>navigate('/Job-portal')} className='Enav-item'>Logout</div>
+                                    <div className='Enav-item'>Logout</div>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +188,7 @@ const jobStats = useMemo(() => {
                                     <div onClick={() => !isVerifying && setActiveTab('My Profile')} className={activetab === 'My Profile' ? "Active1" : 'Navbox1'} >
                                         {activetab === 'My Profile' ? <img src={ProfileAct} height={15} width={15} alt="My Profile" /> : <img src={Profile} height={15} width={15} alt="My Profile" />}
                                     </div>
-                                    <div onClick={() => !isVerifying && setActiveTab('Logout')} className={activetab === 'Logout' ? "Active1" : 'Navbox1'} >
+                                    <div onClick={() => !isVerifying && setShowLogoutModal(true)} className={activetab === 'Logout' ? "Active1" : 'Navbox1'} style={{ cursor: 'pointer' }}>
                                         {activetab === 'Logout' ? <img src={LogoutAct} height={15} width={15} alt="Logout" /> : <img src={Logout} height={15} width={15} alt="Logout" />}
                                     </div>
                                 </div>
@@ -202,7 +210,7 @@ const jobStats = useMemo(() => {
                                         </div>
                                     </div>
                                     <div className="pending-section">
-                                        <img src={ClockImage} alt="pending" className="pending-icon"/>
+                                        <img src={ClockImage} alt="pending" className="pending-icon" />
                                         <h2>Pending Verification</h2>
                                     </div>
                                 </div>
@@ -213,11 +221,11 @@ const jobStats = useMemo(() => {
                                             <h2>Hi {currentEmployer?.hrName},</h2>
                                             <p style={{ fontWeight: "600" }}>Here's, What's Going on... </p>
                                         </div>
-                                        <button className='post-job-btn' onClick={()=>{setActiveTab('Post a Job')}}>+ Post a Job</button>
+                                        <button className='post-job-btn' onClick={() => { setActiveTab('Post a Job') }}>+ Post a Job</button>
                                     </div>
 
                                     <div className='E-DashB-Over-View'>
-                                        <h2 style={{ marginLeft: "40px" }}>OverView</h2>
+                                        <h2 style={{ marginLeft: "40px" }}>Overview</h2>
                                         <div className='EDashB-Application-Counts'>
                                             <div className='E-DashB-No-Counts'>
                                                 <div><img src={ActiveJobs} width={40} alt="" /></div>
@@ -240,86 +248,90 @@ const jobStats = useMemo(() => {
 
                                     {/* Recently posted jobs */}
                                     <div>
-                                     <div className='ERecent-Post-Cont'>
-                                        <h3 style={{ marginleft: "40px" }}>Recently Posted Jobs</h3>
-                                        <div className='ERecent-Post-Table-Container'>
-                                            {PostedJob.length>0 ? <>
-                                                  <div className="postedjobs-grid-layout postedjobs-table-header">
-                                                    <div />
-                                                    <span className="postedjobs-label">Applicants</span>
-                                                    <span className="postedjobs-label">New</span>
-                                                    <span className="postedjobs-label">Shortlisted</span>
-                                                    <span className="postedjobs-label">Interview</span>
-                                                    <span className="postedjobs-label">Rejected</span>
-                                                    <div />
-                                                  </div>
-                                            
-                                                  <div className="postedjobs-list">
-                                                    {PostedJob.slice(0,5).map((job) => {
-                                                      const stats = getJobStats(job.id)
-                                            
-                                                      return (
-                                                        <div key={job.id} className="postedjobs-grid-layout postedjobs-card">
-                                                          <div className="postedjobs-info">
-                                                            <h3>{job.jobTitle || job.title}</h3>
-                                                            <p className="postedjobs-loc flex items-center gap-2">
-                                                              <img src={place} alt="location" className="post-job-locationicon" />
-                                                              {job.location}
-                                                            </p>
-                                                            <small>Created on: {job.postedDate || job.posted}</small>
-                                                          </div> 
-                                                          <span className="postedjobs-badge">{stats.total}</span>
-                                                          <span className="postedjobs-badge">{stats.new}</span>
-                                                          <span className="postedjobs-badge">{stats.screening}</span>
-                                                          <span className="postedjobs-badge">{stats.interview}</span>
-                                                          <span className="postedjobs-badge">{stats.rejected}</span>
-                                            
-                                                          <div className="postedjobs-actions">
-                                                            <button className="postedjobs-view-btn"onClick={() => handleViewApplicants(job)}>
-                                                            View applicants </button>
-                                                          </div>
-                                                        </div>
-                                                      );
-                                                    })}
-                                                  </div>
-                                                  </>
-                                                  :
-                                                  <>
-                                                  <h2 style={{display:"flex",justifyContent:"center",alignItems:"center",height:'50vh'}}>No Jobs posted by you</h2>
-                                                  </>
-                                                  }
-                                            {currentEmployer.jobPosted.length > 0 && (
-                                                <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                                                    <button className="view-more-link" onClick={() => setActiveTab('My job post')}>
-                                                     View more...</button> 
-                                                </div>
-                                            )}
+                                        <div className='ERecent-Post-Cont'>
+                                            <h3 style={{ marginleft: "40px" }}>Recently Posted Jobs</h3>
+                                            <div className='ERecent-Post-Table-Container'>
+                                                {PostedJob.length > 0 ? <>
+                                                    <div className="postedjobs-grid-layout postedjobs-table-header">
+                                                        <div />
+                                                        <span className="postedjobs-label">Applicants</span>
+                                                        <span className="postedjobs-label">New</span>
+                                                        <span className="postedjobs-label">Shortlisted</span>
+                                                        <span className="postedjobs-label">Interview</span>
+                                                        <span className="postedjobs-label">Rejected</span>
+                                                        <div />
+                                                    </div>
+
+                                                    <div className="postedjobs-list">
+                                                        {PostedJob.slice(0, 5).map((job) => {
+                                                            const stats = getJobStats(job.id)
+
+                                                            return (
+                                                                <div key={job.id} className="postedjobs-grid-layout postedjobs-card">
+                                                                    <div className="postedjobs-info">
+                                                                        <h3>{job.jobTitle || job.title}</h3>
+                                                                        <p className="postedjobs-loc flex items-center gap-2">
+                                                                            <img src={place} alt="location" className="post-job-locationicon" />
+                                                                            {job.location}
+                                                                        </p>
+                                                                        <small>Created on: {job.postedDate || job.posted}</small>
+                                                                    </div>
+                                                                    <span className="postedjobs-badge">{stats.total}</span>
+                                                                    <span className="postedjobs-badge">{stats.new}</span>
+                                                                    <span className="postedjobs-badge">{stats.screening}</span>
+                                                                    <span className="postedjobs-badge">{stats.interview}</span>
+                                                                    <span className="postedjobs-badge">{stats.rejected}</span>
+
+                                                                    <div className="postedjobs-actions">
+                                                                        <button className="postedjobs-view-btn" onClick={() => handleViewApplicants(job)}>
+                                                                            View applicants </button>
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </>
+                                                    :
+                                                    <>
+                                                        <h2 style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '50vh' }}>No Jobs posted by you</h2>
+                                                    </>
+                                                }
+                                                {currentEmployer.jobPosted.length > 0 && (
+                                                    <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                                                        <button className="view-more-link" onClick={() => setActiveTab('My job post')}>
+                                                            View more...</button>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </>
                             )}
                         </>
                     )}
-                       
+
                     {activetab === 'Post a Job' && (<PostJobForm />)}
-                        
-                    {activetab === 'My job post' && (<PostedJobs onViewApplicants={(job) => { setSelectedJob(job); setActiveTab('ViewApplicants');}}/>)}
-                        
-                    {activetab === 'ViewApplicants' && (<ViewApplicants job={selectedJob} onBack={() => setActiveTab('My job post')}/>)}
-                        
+
+                    {activetab === 'My job post' && (<PostedJobs onViewApplicants={(job) => { setSelectedJob(job); setActiveTab('ViewApplicants'); }} />)}
+
+                    {activetab === 'ViewApplicants' && (<ViewApplicants job={selectedJob} onBack={() => setActiveTab('My job post')} />)}
+
                     {activetab === 'Find a Talent' && (<FindTalent />)}
-                        
+
                     {activetab === 'Analytics' && (<AnalyticsPage />)}
-                        
-                    {activetab === 'Billing' && (<Billings />)}
-                        
+
+                    {activetab === 'Billing' && ( <PlansBilling/>)}
+                    {/* {activetab === 'Billing' && ( <BillingSec/>)}     */}
+                    
+
                     {activetab === 'My Profile' && (<AboutYourCompany hideNavigation={true} setActiveTab={setActiveTab} />)}
-                        
+
                 </div>
 
             </div>
-            <Footer />
+            <LogoutModal show={showLogoutModal} onClose={() => setShowLogoutModal(false)} onConfirm={handleLogoutConfirm}
+            />
+            {/* <Footer /> */}
         </>
     );
 };

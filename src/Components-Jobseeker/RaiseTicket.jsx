@@ -5,11 +5,13 @@ import './RaiseTicket.css';
 import { Footer } from '../Components-LandingPage/Footer';
 import { JHeader } from './JHeader';
 import { Header } from '../Components-LandingPage/Header';
+import { useJobs } from '../JobContext';
 
 
 
 export const RaiseTicket = () => {
     const navigate = useNavigate();
+    const {setRaisedTickets}=useJobs()
     const [formData, setFormData] = useState({
         category: '',
         subject: '',
@@ -44,11 +46,24 @@ export const RaiseTicket = () => {
 
     const handleConfirm = () => {
         setStep('loading');
+ 
         setTimeout(() => {
+            const ticketData = {
+                id: `#TK${Date.now().toString().slice(-4)}`,
+                name: formData.name,
+                category: formData.category,
+                subject: formData.subject,
+                status: "Pending",
+                mobile:formData.phone,
+                date: new Date().toLocaleDateString('en-GB')
+            };
+            setRaisedTickets((prevTickets) => [...prevTickets, ticketData]);
+ 
             setStep('success');
             setTimeout(() => {
-                navigate('/Job-portal/jobseeker/help-center');
+                navigate('/Job-portal/jobseeker/help-center', { state: { newTicket: ticketData } });
             }, 2000);
+ 
         }, 1500);
     };
 

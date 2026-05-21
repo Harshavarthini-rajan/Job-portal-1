@@ -5,10 +5,12 @@
   font-family: 'Inter', sans-serif;
 }
 
-.membership-cr-membership-header h1 {
-  font-size: 1.25rem;
+.membership-cr-membership-header {
+  flex: 1;
   color: #333;
-  margin-bottom: 20px;
+  text-align: center;
+  border:1px solid #a0a0a0;
+  border-radius:10px;
 }
 
 .membership-cr-membership-content {
@@ -280,6 +282,7 @@
   position: relative;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 20px;
 }
 
 .membership-cr-toggle-switch::after {
@@ -379,7 +382,10 @@
 
 .membership-cr-preview-sidebar {
   flex: 1;
+  display: flex;
+  align-items: center;
   min-width: 300px;
+  height: 100vh;  
 }
 
 .membership-cr-preview-header {
@@ -397,13 +403,14 @@
 }
 
 .membership-cr-preview-card {
-  background: white;
+  background: rgb(208, 23, 23);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   overflow: hidden;
   text-align: center;
   margin-top: 50px;
-  padding-bottom: 25px;
+  padding:10px 25px;
+  height: 400px ;
 }
 
 .membership-cr-plan-badge {

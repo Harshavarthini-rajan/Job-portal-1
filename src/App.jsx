@@ -57,6 +57,8 @@ import { EditJob } from './Components-Employer/EditJob'
 // import FindTalent2 from './Components-Employer/Findtalent2'
 // import { ProfileCard } from './Components-Employer/ProfileCard'
 import { JsProfileOverview } from './Components-Employer/JsProfileOverview'
+import { ReportAJob } from './Components-Jobseeker/ReportAJob'
+import { AdminLogin } from './Components-Admin/AdminLogin'
 import { AdminDashboard } from './Components-Admin/AdminDashboard'
 
 const router = createBrowserRouter([{  path: '/',
@@ -263,6 +265,10 @@ const router = createBrowserRouter([{  path: '/',
   element: <EditJob />
 },
 {
+  path: '/Job-portal/jobseeker/ReportAJob',
+  element: <ReportAJob />,
+},
+{
   path: '/Job-portal/jobseeker/Chat',
   element: <JMessenger/>
 },
@@ -285,6 +291,10 @@ const router = createBrowserRouter([{  path: '/',
 {
   path:'/Job-portal/Employer/about-your-company/company-verification',
   element: <CompanyVerify/>
+},
+{
+  path: '/Job-portal/Admin/login',
+  element: <AdminLogin />,
 },
 {
   path:'/Job-portal/admin/dashboard',

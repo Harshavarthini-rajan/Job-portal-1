@@ -1,9 +1,7 @@
-
 .contact-page {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #ffffff;
 }
-
 
 .contact-container {
     margin-top: 150px;
@@ -13,7 +11,6 @@
     padding: 50px 10%;
     gap: 50px; 
 }
-
 
 .contact-left {
     flex: 1;
@@ -26,7 +23,6 @@
     height: 700px;
     border-radius: 12px;
 }
-
 
 .contact-right {
     flex: 1;

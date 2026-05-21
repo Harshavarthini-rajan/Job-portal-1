@@ -52,7 +52,6 @@ export const AdminSettings = () => {
                  )}   
                 
                 </>
-
             )}
             
             {activeTab === "Notification Settings" && (

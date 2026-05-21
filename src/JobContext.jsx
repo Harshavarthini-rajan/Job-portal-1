@@ -4,10 +4,93 @@ import { Joblist } from './JobList';
 const JobContext = createContext();
 
 export const JobProvider = ({ children }) => {
-    
+
     const [jobs, setJobs] = useState(Joblist); // Total JobList common for jobseeker and employer   
     const [activeMenuId, setActiveMenuId] = useState(null); // Using Id to Toggle Menu in Notification Window
-    const [companyProfile, setCompanyProfile] = useState([]); //From About your company
+    const [employeractiveMenuId, setEmployerActiveMenuId] = useState(null);
+    const publishedPlans = [
+        {
+            id: 'starter',
+            PlanName: 'STARTER PLAN',
+            badge: 'Limited Access',
+            planLevel: 1,
+            price: '0',
+            discount: 0,
+            tax: 18,
+            billingCycle: 'Monthly',
+            duration: 30,
+            color: '#1e90ff',
+            features: [
+                { text: '0 Jobs Posting', isInclude: true },
+                { text: 'Basic Employer Profile', isInclude: true },
+                { text: 'Standard Support', isInclude: true },
+                { text: 'Account Manager', isInclude: false },
+                { text: 'Analytics', isInclude: false },
+                { text: 'Candidate Search', isInclude: false },
+                { text: 'Highlight Your Job Listing', isInclude: false },
+            ],
+            isTrialEnabled: false,
+            isAutoRenewal: false,
+            GraceTime: "",
+            planTags: ["popular", "Recommended"],
+            TrailDuration: "7"
+        },
+        {
+            id: 'business',
+            PlanName: 'BUSINESS PLAN',
+            planLevel: 2,
+            badge: 'Basic Plan',
+            price: '499',
+            discount: 10,
+            tax: 18,
+            billingCycle: 'Monthly',
+            duration: 30,
+            color: '#ff6c00',
+            features: [
+                { text: '30 Jobs Posting', isInclude: true },
+                { text: 'Featured Employer Profile', isInclude: true },
+                { text: 'Resume Database Access', isInclude: true },
+                { text: 'Priority Support', isInclude: true },
+                { text: 'Basic Account Manager', isInclude: true },
+                { text: 'Basic Analytics', isInclude: true },
+                { text: 'Limited Candidate Search', isInclude: true },
+                { text: 'Highlight Your Job Listing', isInclude: false },
+            ],
+            isTrialEnabled: false,
+            isAutoRenewal: false,
+            GraceTime: "2",
+            planTags: ["popular", "Recommended"],
+            TrailDuration: "7"
+        },
+        {
+            id: 'enterprise',
+            PlanName: 'ENTERPRISE PLAN',
+            badge: 'Professional Plan',
+            planLevel: 3,
+            price: '999',
+            discount: 10,
+            tax: 18,
+            billingCycle: 'Monthly',
+            duration: 30,
+            color: '#8a2be2',
+            features: [
+                { text: 'Unlimited Jobs Posting', isInclude: true },
+                { text: 'Premium Employer Profile', isInclude: true },
+                { text: 'Full Resume Database Access', isInclude: true },
+                { text: 'Priority Support', isInclude: true },
+                { text: 'Dedicated Account Manager', isInclude: true },
+                { text: 'Advanced Analytics', isInclude: true },
+                { text: 'Unlimited Candidate Search', isInclude: true },
+                { text: 'Highlight Your Job Listing', isInclude: true },
+            ],
+            isTrialEnabled: false,
+            isAutoRenewal: false,
+            GraceTime: "2",
+            planTags: ["popular", "Recommended"],
+            TrailDuration: "7"
+        }
+    ];
+    const [allPlans, setAllPlans] = useState(publishedPlans);
 
     const [Alluser, setAlluser] = useState([
         {
@@ -23,11 +106,13 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "Meta Frontend Certificate", "file": "meta_fe.pdf" }],
             preferences: [{ "currentCTC": "5 LPA", "expectedCTC": "8 LPA", "jobType": "Hybrid", "role": "Senior Frontend Developer", "ready": "Yes", "relocate": "No" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "05/01/2026"
         },
         {
             id: "2",
-            profile: { "fullName": "Ajeeth ", "gender": "Male", "dob": "2001-03-10", "maritalStatus": "Single", "nationality": "Indian" },
+            profile: { "fullName": "Ajeeth", "gender": "Male", "dob": "2001-03-10", "maritalStatus": "Single", "nationality": "Indian" },
             currentDetails: { "jobTitle": "Data Analyst Trainee", "company": "DataPoint Solutions", experience: "Fresher", "currentLocation": "Coimbatore", "prefLocation": "Bangalore" },
             contact: { "mobile": "+91 9988776655", "altMobile": "", "email": "AjeetH.data@email.com", "altEmail": "", "address": "7/2, Peelamedu", "street": "Avinashi Road", "city": "Coimbatore", "state": "Tamil Nadu", "pincode": "641004", "country": "India" },
             resume: { "size": "1.1MB", "portfolio": "" },
@@ -38,12 +123,14 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "Google Data Analytics", "file": "g_data.pdf" }],
             preferences: [{ "currentCTC": "0", "expectedCTC": "4 LPA", "jobType": "Full-Time", "role": "Junior Data Analyst", "ready": "Yes", "relocate": "Yes" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "15/11/2025"
         },
         {
             id: "3",
             profile: { "fullName": "Surya vardhan KGF", "gender": "Male", "dob": "1996-11-30", "maritalStatus": "Married", "nationality": "Indian" },
-            currentDetails: { "jobTitle": "Backend Engineer", "company": "CloudScale Systems", experience: "4 Years", "currentLocation": "Bangalore", "prefLocation": "Remote" },
+            currentDetails: { "jobTitle": "Backend Engineer", "company": "CloudScale Systems", experience: "7 Years", "currentLocation": "Bangalore", "prefLocation": "Remote" },
             contact: { "mobile": "+91 9000112233", "altMobile": "", "email": "Surya.dev@email.com", "altEmail": "", "address": "HSR Layout Sector 2", "street": "27th Main", "city": "Bangalore", "state": "Karnataka", "pincode": "560102", "country": "India" },
             resume: { "size": "2MB", "portfolio": "" },
             education: { "highestQual": "Master's Degree", "sslc": { "institution": "Government Hr Sec", "percentage": "85%", "location": "Madurai", "year": "2012" }, "hsc": { "stream": "Pure Science", "institution": "Government Hr Sec", "location": "Madurai", "year": "2014", "percentage": "80%" }, "graduations": [{ "id": 1, "degree": "MCA", "status": "Completed", "dept": "Computer Apps", "percentage": "7.5 CGPA", "startYear": "2017", "endYear": "2019", "college": "Anna University", "city": "Chennai", "state": "Tamil Nadu", "country": "India" }] },
@@ -53,12 +140,14 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "AWS Certified Developer", "file": "aws_dev.pdf" }],
             preferences: [{ "currentCTC": "12 LPA", "expectedCTC": "18 LPA", "jobType": "Remote", "role": "Backend Lead", "ready": "Yes", "relocate": "No" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "25/08/2024"
         },
         {
             id: "4",
             profile: { "fullName": "Chutki Bheem", "gender": "Female", "dob": "2000-02-14", "maritalStatus": "Single", "nationality": "Indian" },
-            currentDetails: { "jobTitle": "Content Writer", "company": "Media Works", experience: "1 Year", "currentLocation": "Chennai", "prefLocation": "Chennai" },
+            currentDetails: { "jobTitle": "Content Writer", "company": "Media Works", experience: "9 Year", "currentLocation": "Chennai", "prefLocation": "Chennai" },
             contact: { "mobile": "+91 9444123456", "altMobile": "", "email": "Chuki.write@email.com", "altEmail": "", "address": "Anna Nagar East", "street": "3rd Cross", "city": "Chennai", "state": "Tamil Nadu", "pincode": "600102", "country": "India" },
             resume: { "size": "900KB", "portfolio": "" },
             education: { "highestQual": "Bachelor's Degree", "sslc": { "institution": "Holy Cross", "percentage": "96%", "location": "Trichy", "year": "2016" }, "hsc": { "stream": "Arts", "institution": "Holy Cross", "location": "Trichy", "year": "2018", "percentage": "94%" }, "graduations": [{ "id": 1, "degree": "B.A. English", "status": "Completed", "dept": "Literature", "percentage": "82%", "startYear": "2018", "endYear": "2021", "college": "Loyola College", "city": "Chennai", "state": "Tamil Nadu", "country": "India" }] },
@@ -68,12 +157,14 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "HubSpot Content Marketing", "file": "hubspot.pdf" }],
             preferences: [{ "currentCTC": "3.5 LPA", "expectedCTC": "5 LPA", "jobType": "Full-Time", "role": "Senior Content Strategist", "ready": "Yes", "relocate": "No" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "03/03/2026"
         },
         {
             id: "5",
             profile: { "fullName": "Thomas Antony", "gender": "Male", "dob": "1997-07-07", "maritalStatus": "Single", "nationality": "Indian" },
-            currentDetails: { "jobTitle": "DevOps Engineer", "company": "InfraGenie", experience: "3 Years", "currentLocation": "Hyderabad", "prefLocation": "Chennai" },
+            currentDetails: { "jobTitle": "DevOps Engineer", "company": "InfraGenie", experience: "4 Years", "currentLocation": "Hyderabad", "prefLocation": "Chennai" },
             contact: { "mobile": "+91 8877665544", "altMobile": "", "email": "Thomas.devops@email.com", "altEmail": "", "address": "Madhapur", "street": "HITEC City", "city": "Hyderabad", "state": "Telangana", "pincode": "500081", "country": "India" },
             resume: { "size": "1.5MB", "portfolio": "" },
             education: { "highestQual": "Bachelor's Degree", "sslc": { "institution": "Zion Matric", "percentage": "88%", "location": "Kanchi", "year": "2013" }, "hsc": { "stream": "CS", "institution": "Zion Matric", "location": "Kanchi", "year": "2015", "percentage": "82%" }, "graduations": [{ "id": 1, "degree": "B.E. ECE", "status": "Completed", "dept": "Engineering", "percentage": "7.8 CGPA", "startYear": "2015", "endYear": "2019", "college": "Sathyabama University", "city": "Chennai", "state": "Tamil Nadu", "country": "India" }] },
@@ -83,12 +174,14 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "CKA Certification", "file": "cka.pdf" }],
             preferences: [{ "currentCTC": "9 LPA", "expectedCTC": "13 LPA", "jobType": "Full-Time", "role": "DevOps Architect", "ready": "Yes", "relocate": "Yes" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "01/12/2023"
         },
         {
             id: "6",
             profile: { "fullName": "Karthiga", "gender": "Female", "dob": "1995-12-05", "maritalStatus": "Single", "nationality": "Indian" },
-            currentDetails: { "jobTitle": "Product Manager", "company": "FinTech Hub", experience: "5 Years", "currentLocation": "Bangalore", "prefLocation": "Bangalore" },
+            currentDetails: { "jobTitle": "Product Manager", "company": "FinTech Hub", experience: "8 Years", "currentLocation": "Bangalore", "prefLocation": "Bangalore" },
             contact: { "mobile": "+91 9112233445", "altMobile": "", "email": "Karthiga.pm@email.com", "altEmail": "", "address": "Indiranagar", "street": "100ft Road", "city": "Bangalore", "state": "Karnataka", "pincode": "560038", "country": "India" },
             resume: { "size": "1.8MB", "portfolio": "" },
             education: { "highestQual": "MBA", "sslc": { "institution": "BVB School", "percentage": "94%", "location": "Erode", "year": "2011" }, "hsc": { "stream": "Commerce", "institution": "BVB School", "location": "Erode", "year": "2013", "percentage": "96%" }, "graduations": [{ "id": 1, "degree": "MBA", "status": "Completed", "dept": "Management", "percentage": "9.0 CGPA", "startYear": "2017", "endYear": "2019", "college": "IIM Bangalore", "city": "Bangalore", "state": "Karnataka", "country": "India" }] },
@@ -98,7 +191,9 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "CSPO", "file": "cspo.pdf" }],
             preferences: [{ "currentCTC": "22 LPA", "expectedCTC": "28 LPA", "jobType": "Full-Time", "role": "Senior PM", "ready": "Yes", "relocate": "No" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "07/07/2024"
         },
         {
             id: "7",
@@ -113,7 +208,9 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "ISTQB Foundation", "file": "istqb.pdf" }],
             preferences: [{ "currentCTC": "0", "expectedCTC": "4.5 LPA", "jobType": "Full-Time", "role": "QA Engineer", "ready": "Yes", "relocate": "No" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "15/06/2024"
         },
         {
             id: "8",
@@ -128,7 +225,9 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "MERN Stack Mastery", "file": "mern.pdf" }],
             preferences: [{ "currentCTC": "7.5 LPA", "expectedCTC": "12 LPA", "jobType": "Remote", "role": "Senior Full Stack Developer", "ready": "Yes", "relocate": "No" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "24/04/2024"
         },
         {
             id: "9",
@@ -143,11 +242,13 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "CEH", "file": "ceh.pdf" }],
             preferences: [{ "currentCTC": "18 LPA", "expectedCTC": "25 LPA", "jobType": "Full-Time", "role": "Security Manager", "ready": "Yes", "relocate": "No" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "20/02/2024"
         },
         {
             id: "10",
-            profile: { "fullName": "Lithin and Boys", "gender": "male", "dob": "1997-11-11", "maritalStatus": "Single", "nationality": "Indian" },
+            profile: { "fullName": "Lithin", "gender": "male", "dob": "1997-11-11", "maritalStatus": "Single", "nationality": "Indian" },
             currentDetails: { "jobTitle": "HR Generalist", "company": "Global Talent", experience: "4 Years", "currentLocation": "Chennai", "prefLocation": "Chennai" },
             contact: { "mobile": "+91 9333222111", "altMobile": "", "email": "Lithinandco.hr@email.com", "altEmail": "", "address": "Mylapore", "street": "Luz Church Rd", "city": "Chennai", "state": "Tamil Nadu", "pincode": "600004", "country": "India" },
             resume: { "size": "1.2MB", "portfolio": "" },
@@ -158,15 +259,19 @@ export const JobProvider = ({ children }) => {
             certs: [{ "name": "SHRM Certified", "file": "shrm.pdf" }],
             preferences: [{ "currentCTC": "6 LPA", "expectedCTC": "9 LPA", "jobType": "Full-Time", "role": "HR Manager", "ready": "Yes", "relocate": "No" }],
             appliedJobs: [],
-            savedJobs: []
+            savedJobs: [],
+            status: "Active",
+            joinDate: "17/05/2023"
         }
     ]
     )
-    const currentUserId = "9";
+    const currentUserId = "5";
     const currentUser = Alluser.find(user => user.id === currentUserId);
+    const isUserAccessible = currentUser && currentUser.status === "Active";
     const savedJobs = currentUser.savedJobs;  //created to show the data in Myjobs.jsx
     const appliedJobs = currentUser.appliedJobs; //created to show the data in Myjobs.jsx
-    //static employer data
+    const defaultPlan = allPlans.find(plan => plan.id === 'starter');
+
     const [currentEmployer, setCurrentEmployer] = useState({
         id: "EMP001",
         companyId: "INF008",
@@ -177,8 +282,102 @@ export const JobProvider = ({ children }) => {
         companyLogo: "",
         jobPosted: [],
         messages: [],
+        joinDate: "01/02/2022",
+        membership: {
+            planLevel: defaultPlan.planLevel,
+            planName: defaultPlan.PlanName,
+            active: true,
+            price: parseFloat(defaultPlan.price),
+            startDate: "20/04/2026",
+            expiryDate: null,
+            billingCycle: defaultPlan.billingCycle
+        },
+
     });
-    // Chats/messages between Employer and Jobseeker 1:1;
+    const Tickets = [{
+            id: "#TK1001",
+            name: "Ajeeth",
+            category: "Jobseeker",
+            email: "ajeeth@gmail.com",
+            subject: "Broken Apply Button",
+            status: "Pending",
+            message:"Apply button on the jobs tab is not working properly unable to apply for the jobs",
+            priority:"Medium",
+            date: "18/05/2026"
+        },
+        {
+            id: "#TK1002",
+            name: "Ravi",
+            category: "Employer",
+            email: "Ravi@gmail.com",
+            subject: "Login Issue",
+            status: "Pending",
+            message:" unable to Login, please check and resolve ASAP",
+            priority:"High",
+            date: "17/05/2026"
+        },
+    {
+            id: "#TK1003",
+            name: "Gowtham",
+            category: "Jobseeker",
+            email: "Gowtham@gmail.com",
+            subject: "Broken Save Button",
+            status: "Pending",
+            message:"Save button on the jobs tab is not working properly unable to save the jobs",
+            priority:"Low",
+            date: "18/05/2026"
+        },]
+
+    const Enquiries = [
+            {
+                id: "#ENQ1001",
+                name: "Ajeeth",
+                email: "ajeeth@gmail.com",
+                contact: "9876543210",
+                message: "Need help with account",
+                status: "Pending",
+                date: "18/05/2026"
+            },
+            {
+                id: "#ENQ1002",
+                name: "Ravi",
+                email: "ravi@gmail.com",
+                contact: "9123456780",
+                message: "Unable to apply jobs",
+                status: "Contacted",
+                date: "17/05/2026"
+            }
+        ];
+
+        const Reports=[{
+            id: "#ES100112",
+            firstName: "Ajeeth",
+            lastName: "R",
+            mobile: "9876543210",
+            email: "ajeeth@gmail.com",
+            reason: "Fake Job Posting",
+            explanation: "This company looks suspicious",
+            status: "Pending",
+            priority: "High",
+            date: "18/05/2026"
+        },
+        {
+            id: "#ES100223",
+            firstName: "Ravi",
+            lastName: "K",
+            mobile: "9123456780",
+            email: "ravi@gmail.com",
+            reason: "Spam Recruitment",
+            explanation: "Asking money for interview",
+            status: "Resolved",
+            priority: "Medium",
+            date: "17/05/2026"
+        }]
+
+    const [raisedTickets, setRaisedTickets] = useState(Tickets);
+    const [reports, setReports] = useState(Reports);
+    const [enquiries,setEnquiries]=useState(Enquiries)
+
     const [chats, setChats] = useState([
         // Employer
         { id: currentEmployer.id, name: currentEmployer.hrName, role: "employer", messages: currentEmployer.messages },
@@ -191,8 +390,38 @@ export const JobProvider = ({ children }) => {
             isChatEnded: false
         }))
     ]);
-    // Logic to post a Job from postpreview.jsx
+
     const postJob = (newJobData) => {
+
+        const planLevel = currentEmployer.membership.planLevel;
+        if (!currentEmployer.membership.active) {
+            alert("Your membership is inactive. Please reactivate or upgrade!");
+            return;
+        }
+        const currentPlan = publishedPlans.find(p => p.planLevel === planLevel);
+
+        let maxJobs = 0;
+
+        if (currentPlan) {
+            const jobFeature = currentPlan.features.find(f => f.text.toLowerCase().includes('jobs posting'));
+
+            if (jobFeature) {
+                if (jobFeature.text.toLowerCase().includes('unlimited')) {
+                    maxJobs = Infinity;
+                } else {
+                    const match = jobFeature.text.match(/\d+/);
+                    maxJobs = match ? parseInt(match[0], 10) : 0;
+                }
+            }
+        }
+
+        const currentPostedCount = currentEmployer.jobPosted.length;
+
+        if (currentPostedCount >= maxJobs) {
+    const limitText = maxJobs === Infinity ? "Unlimited" : maxJobs;
+    throw new Error(`As per your Current Plan, you can only post ${limitText} jobs. Please upgrade your plan!`);
+  }
+
         const newId = jobs.length > 0 ? Math.max(...jobs.map(j => Number(j.id))) + 1 : 1;
         const postingSource = "Company Jobs";
 
@@ -217,7 +446,7 @@ export const JobProvider = ({ children }) => {
             company: currentEmployer.company,
             companyId: currentEmployer.companyId,
             logo: "",
-            posted: new Date().toISOString(),
+            posted: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
             PostedBy: postingSource,
             IndustryType: cleanIndustry,
             Department: cleanDept,
@@ -238,11 +467,12 @@ export const JobProvider = ({ children }) => {
             tags: cleanTags,
             companyOverview: "Infotech Overview",
             jobDescription: newJobData.jobDescription,
-            jobStatus: JOB_STATUS.hiring
+            jobStatus: JOB_STATUS.hiring,
+            isHighlighted: false
             // status: { text: 'Hiring in Progress', type: 'progress' }
         };
         setJobs((prev) => [newJob, ...prev]);
-        
+
         setCurrentEmployer((prevEmployer) => ({
             ...prevEmployer,
             jobPosted: [newJob, ...prevEmployer.jobPosted]
@@ -272,18 +502,24 @@ export const JobProvider = ({ children }) => {
                 }
                 return user;
             })
-            
+
         );
         setCurrentEmployer((prev) => ({
-        ...prev,
-        jobPosted: prev.jobPosted.map((job) =>
-            job.id === jobId ? { ...job, ...status } : job
-        ),
-    }));
-        {console.log( currentEmployer.jobPosted)}
+            ...prev,
+            jobPosted: prev.jobPosted.map((job) =>
+                job.id === jobId ? { ...job, ...status } : job
+            ),
+        }));
+        { console.log(currentEmployer.jobPosted) }
     };
     // Toggle End Conversation Logic In Employer Chat Window
     const [isChatEnded, setIsChatEnded] = useState(false);
+    const [employerNotifications, setEmployerNotifications] = useState([{
+        id: "emp_initial",
+        text: "Welcome Employer! Start posting jobs to find the best candidates.",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isRead: false,
+    }]);
     // NotificationData previously passed from AfterLoginLanding page
     const [notificationsData, setNotificationsData] = useState([{
         id: Date.now(),
@@ -291,14 +527,29 @@ export const JobProvider = ({ children }) => {
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         isRead: false,
     }]);
+
+    const [employershowNotification, setEmployerShowNotification] = useState(false);
     // New Messages Notification Logic
     const [showNotification, setShowNotification] = useState(false);
-    // to add NewNotification in NotificationData
-    const addNotification = (text, targetId = null) => {
+
+    const addEmployerNotification = (text, targetId = null, path = null) => {
         const newNotif = {
             id: Date.now(),
             text: text,
             targetId: targetId,
+            path: path,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            isRead: false
+        };
+        setEmployerNotifications(prev => [newNotif, ...prev]);
+    };
+    // to add NewNotification in NotificationData
+    const addNotification = (text, targetId = null, path = null) => {
+        const newNotif = {
+            id: Date.now(),
+            text: text,
+            targetId: targetId,
+            path: path,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             isRead: false
         };
@@ -347,7 +598,7 @@ export const JobProvider = ({ children }) => {
                 }
                 return user;
             })
-            
+
         );
 
         // 2. Update Global Jobs List
@@ -372,7 +623,7 @@ export const JobProvider = ({ children }) => {
                                 ...(job.applicantsList || []),
                                 {
                                     userId: currentUserId,
-                                    status: "Application Submitted", 
+                                    status: "Application Submitted",
                                     appliedDate: getFormattedDate()
                                 }
                             ]
@@ -429,12 +680,12 @@ export const JobProvider = ({ children }) => {
             }))
         );
         if (currentEmployer) {
-        setCurrentEmployer((prev) => ({
-            ...prev,
-            jobPosted: (prev.jobPosted).filter((job) => job.id !== jobId)
-        }));
-        
-    }
+            setCurrentEmployer((prev) => ({
+                ...prev,
+                jobPosted: (prev.jobPosted).filter((job) => job.id !== jobId)
+            }));
+
+        }
 
         addNotification("Job posting has been successfully deleted.");
     };
@@ -483,15 +734,15 @@ export const JobProvider = ({ children }) => {
                     };
                 }
                 if (currentEmployer) {
-        setCurrentEmployer(prev => ({
-            ...prev,
-            jobPosted: prev.jobPosted.map(job =>
-                job.id === jobId
-                    ? { ...job,applicants: job.applicants  } 
-                    : job
-            )
-        }));
-    }
+                    setCurrentEmployer(prev => ({
+                        ...prev,
+                        jobPosted: prev.jobPosted.map(job =>
+                            job.id === jobId
+                                ? { ...job, applicants: job.applicants }
+                                : job
+                        )
+                    }));
+                }
                 // if (user.role === "employer" && user.id === currentEmployer?.id) {
                 //     return {
                 //         ...user,
@@ -505,7 +756,7 @@ export const JobProvider = ({ children }) => {
                 return user;
             })
         );
-        
+
     };
 
     //**Not yet used In anycomponent need to check/ Remove */
@@ -524,63 +775,64 @@ export const JobProvider = ({ children }) => {
     };
 
     const withdrawApplication = (originalJob) => {
-    // 1. Remove from User's applied list
-    if (window.confirm("Are you sure you want to withdraw?")){
-    setAlluser((prevUsers) =>
-      prevUsers.map((user) => {
-        if (user.id === currentUserId) {
-          return {
-            ...user,
-            appliedJobs: (user.appliedJobs || []).filter(
-              (job) => job.id !== originalJob.id
-            ),
-          };
+        // 1. Remove from User's applied list
+        if (window.confirm("Are you sure you want to withdraw?")) {
+            setAlluser((prevUsers) =>
+                prevUsers.map((user) => {
+                    if (user.id === currentUserId) {
+                        return {
+                            ...user,
+                            appliedJobs: (user.appliedJobs || []).filter(
+                                (job) => job.id !== originalJob.id
+                            ),
+                        };
+                    }
+
+                    // 2. Decrement applicant count for the employer
+                    if (currentEmployer.id === originalJob.companyId) {
+                        return {
+                            ...user,
+                            jobPosted: user.jobPosted.map((job) =>
+                                job.id === originalJob.id
+                                    ? { ...job, applicants: Math.max((job.applicants || 0) - 1, 0) }
+                                    : job
+                            ),
+                        };
+                    }
+                    return user;
+                })
+            );
+
+            // 3. Update Global Jobs List
+            setJobs((prevJobs) =>
+                prevJobs.map((job) =>
+                    job.id === originalJob.id
+                        ? { ...job, applicants: Math.max((job.applicants || 0) - 1, 0) }
+                        : job
+                )
+            );
+
+            // 4. Update Local Employer State
+            if (currentEmployer.id === originalJob.companyId) {
+                setCurrentEmployer((prev) => ({
+                    ...prev,
+                    jobPosted: prev.jobPosted.map((job) =>
+                        job.id === originalJob.id
+                            ? { ...job, applicants: Math.max((job.applicants || 0) - 1, 0) }
+                            : job
+                    ),
+                }));
+            }
+            alert(`Successfully withdrawn your application for ${originalJob.title}.`);
+            navigate('/Job-portal/jobseeker/withdrawn');
         }
-
-        // 2. Decrement applicant count for the employer
-        if (currentEmployer.id === originalJob.companyId) {
-          return {
-            ...user,
-            jobPosted: user.jobPosted.map((job) =>
-              job.id === originalJob.id
-                ? { ...job, applicants: Math.max((job.applicants || 0) - 1, 0) }
-                : job
-            ),
-          };
-        }
-        return user;
-      })
-    );
-
-    // 3. Update Global Jobs List
-    setJobs((prevJobs) =>
-      prevJobs.map((job) =>
-        job.id === originalJob.id
-          ? { ...job, applicants: Math.max((job.applicants || 0) - 1, 0) }
-          : job
-      )
-    );
-
-    // 4. Update Local Employer State
-    if (currentEmployer.id === originalJob.companyId) {
-      setCurrentEmployer((prev) => ({
-        ...prev,
-        jobPosted: prev.jobPosted.map((job) =>
-          job.id === originalJob.id
-            ? { ...job, applicants: Math.max((job.applicants || 0) - 1, 0) }
-            : job
-        ),
-      }));
-    }
-    alert(`Successfully withdrawn your application for ${originalJob.title}.`);
-    navigate('/Job-portal/jobseeker/withdrawn');
-  }};
+    };
 
     //Dynamic Action count used in EDashboard & postedjobs Component//
     const getJobStats = (jobId) => {
         const jobExists = jobs.some(j => j.id === jobId);
-    if (!jobExists) return { total: 0, new: 0, screening: 0, interview: 0, rejected: 0 };
-    
+        if (!jobExists) return { total: 0, new: 0, screening: 0, interview: 0, rejected: 0 };
+
         const jobApplicants = Alluser.filter(user =>
             user.appliedJobs?.some(aj => aj.id === jobId)
         );
@@ -596,36 +848,118 @@ export const JobProvider = ({ children }) => {
             total: jobApplicants.length,
 
             new: getCountByStatus(["Application Submitted"]),
-            screening: getCountByStatus(["Resume Screening", "Recruiter Review", "Shortlisted"]),
+            screening: getCountByStatus(["Resume Screening", "Recruiter Review",]),
+            shortlisted: getCountByStatus(["Shortlisted"]),
             interview: getCountByStatus(["Interview Called"]),
             rejected: getCountByStatus(["Rejected"])
         };
     };
 
     const removeRejectedJob = (originalJob) => {
-          if (window.confirm("Remove this rejected application from history?")) {
+        if (window.confirm("Remove this rejected application from history?")) {
             // Update User's appliedJobs
             setAlluser(prev => prev.map(user => {
-              if (user.id === currentUserId) {
-                return {
-                  ...user,
-                  appliedJobs: user.appliedJobs?.filter(j => j.id !== originalJob.id)
-                };
-              }
-              return user;
+                if (user.id === currentUserId) {
+                    return {
+                        ...user,
+                        appliedJobs: user.appliedJobs?.filter(j => j.id !== originalJob.id)
+                    };
+                }
+                return user;
             }));
-    
-            navigate('/Job-portal/jobseeker/myjobs');
-          }
-        };
 
+            navigate('/Job-portal/jobseeker/myjobs');
+        }
+    };
+    const onSelectPlan = (membershipDetails) => {
+        setCurrentEmployer(prev => ({
+            ...prev,
+            membership: {
+                planLevel: membershipDetails.level,
+                planName: membershipDetails.name,
+                startDate: membershipDetails.startDate,
+                expiryDate: membershipDetails.expiryDate,
+                billingCycle: membershipDetails.billingCycle,
+                status: membershipDetails.status,
+                paymentDetails: {
+                    subtotal: membershipDetails.subtotal,
+                    tax: membershipDetails.cgst + membershipDetails.sgst,
+                    total: membershipDetails.totalWithTax
+                }
+            }
+        }));
+
+        alert(`${membershipDetails.name} activated successfully!`);
+
+    };
+
+
+    const toggleHighlight = (jobId) => {
+        const planLevel = currentEmployer.membership.planLevel;
+
+        let highlightLimit = 0;
+        if (planLevel === 1) highlightLimit = 0;
+        else if (planLevel === 2) highlightLimit = 5;
+        else if (planLevel === 3) highlightLimit = 10;
+
+        const currentlyHighlighted = currentEmployer.jobPosted.filter(j => j.isHighlighted).length;
+        const targetJob = currentEmployer.jobPosted.find(j => j.id === jobId);
+
+        if (!targetJob) return;
+        if (!targetJob.isHighlighted && currentlyHighlighted >= highlightLimit) {
+            alert(`Please upgrade your plan to highlight more than ${highlightLimit} jobs.`);
+            return;
+        }
+
+        const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+        setJobs(prevJobs => prevJobs.map(job => {
+            if (job.id === jobId) {
+                const nextState = !job.isHighlighted;
+                return {
+                    ...job,
+                    isHighlighted: nextState,
+                    highlightOn: nextState ? today : null
+                };
+            }
+            return job;
+        }));
+
+        setCurrentEmployer(prev => {
+            const updatedEmployerJobs = prev.jobPosted.map(job => {
+                if (job.id === jobId) {
+                    const nextState = !job.isHighlighted;
+                    return {
+                        ...job,
+                        isHighlighted: nextState,
+                        highlightOn: nextState ? today : null
+                    };
+                }
+                return job;
+            });
+
+            return { ...prev, jobPosted: updatedEmployerJobs };
+        });
+    };
+    const getFeaturesForPlan = (planLevel) => {
+        const plan = publishedPlans.find(p => p.planLevel === planLevel);
+
+        if (!plan) return [];
+        return plan.features.map(f => ({
+            text: f.text,
+            isIncluded: f.isInclude !== undefined ? f.isInclude : f.isIncluded
+        }));
+    };
     return (
         <JobContext.Provider value={{
-            jobs, chats, setChats, setJobs, isJobSaved, isChatEnded, setIsChatEnded,
+            jobs, chats, setChats, setJobs, isJobSaved, isChatEnded, setIsChatEnded, employeractiveMenuId, setEmployerActiveMenuId,
+            employerNotifications, setEmployerNotifications, employershowNotification, setEmployerShowNotification,
             setNotificationsData, addNotification, toggleSaveJob, applyForJob, notificationsData, showNotification, setShowNotification,
-            activeMenuId, setActiveMenuId, addJob, deleteJob, postJob, editJob, Alluser, setAlluser, activeSidebarUsers,
-            addChatToSidebar, currentUser, withdrawJobFromUser, updateApplicantStatus, isJobApplied, companyProfile, setCompanyProfile, currentEmployer,
-            getJobStats, savedJobs, appliedJobs, currentUserId, setCurrentEmployer,withdrawApplication,removeRejectedJob
+            activeMenuId, setActiveMenuId, addJob, deleteJob, postJob, editJob, Alluser, setAlluser, activeSidebarUsers, isUserAccessible,
+            addChatToSidebar, currentUser, withdrawJobFromUser, updateApplicantStatus, isJobApplied, currentEmployer,
+            getJobStats, savedJobs, appliedJobs, currentUserId, withdrawApplication, removeRejectedJob, addEmployerNotification, setCurrentEmployer, onSelectPlan,
+            toggleHighlight, getFeaturesForPlan, publishedPlans, allPlans, setAllPlans,raisedTickets,setRaisedTickets,reports,setReports,
+            enquiries,setEnquiries//companyProfile, setCompanyProfile, 
         }}>
             {children}
         </JobContext.Provider>
@@ -633,4 +967,3 @@ export const JobProvider = ({ children }) => {
 };
 
 export const useJobs = () => useContext(JobContext);
-

@@ -134,9 +134,9 @@
 .jobset-arrow-icon {
   position: absolute;
   right: 12px;          
-  top: 50%;              
-  transform: translateY(-50%);
-  width: 20px;          
+  top: 80%;              
+  transform: translateY(-20%);
+  width: 10px;          
   pointer-events: none;  
   z-index: 5;
 }

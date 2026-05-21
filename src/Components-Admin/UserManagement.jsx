@@ -5,6 +5,7 @@ import Searchicon from '../assets/icon_search.png'
 import leftArrow from '../assets/left_arrow.png'
 import rightArrow from '../assets/right_arrow.png'
 import threedots from '../assets/ThreeDots.png'
+import { useLocation } from 'react-router-dom'
 
 export const UserManagement = () => {
   const { Alluser, currentEmployer } = useJobs()
@@ -12,7 +13,7 @@ export const UserManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeMenuId, setActiveMenuId] = useState(null); 
   const recordsPerPage = 5;
-
+  const location = useLocation();
 
   const [usersList, setUsersList] = useState([
     ...Alluser.map((user, index) => {
@@ -36,19 +37,17 @@ export const UserManagement = () => {
     setActiveMenuId(null);
   };
 
-  const filteredUsers = usersList.filter((user) => {
-    const name = user.profile.fullName.toLowerCase()
-    const email = user.contact.email.toLowerCase()
-    const role = user.role ? user.role : "candidate"
+  
+  const roleFilter = location.state?.filterRole || 'all'; 
 
-    return (
-      name.includes(search.toLowerCase()) ||
-      email.includes(search.toLowerCase()) ||
-      role.toLowerCase().includes(search.toLowerCase())
-    )
-  })
+ const filteredUsers = usersList.filter((user) => {
+        const role = user.role?.toLowerCase() || "candidate";
+        if (roleFilter === 'employer') return role === 'employer';
+        if (roleFilter === 'candidate') return role === 'candidate';
+        return true;
+    });
 
-  // Dynamic Stats logic
+  
   const totalUsers = usersList.length
   const candidates = usersList.filter(u => u.role !== "employer").length
   const employers = usersList.filter(u => u.role === "employer").length
